@@ -9,12 +9,12 @@ INCLUDE = -I ../igloo
 CFLAGS = -O2 -Wall
 SRCS = test.cpp
 
-all: format runtest  check
+all: check 
 
 runtest: test
 	./test
 
-test: test.cpp
+test: test.cpp format
 	$(CC) $(INCLUDE) test.cpp -o test $(CFLAGS)	
 
 server.o: 
@@ -23,10 +23,10 @@ server.o:
 object: 
 	$(CC) -c LinkedStack.h LinkedStack.cpp $(CFLAGS)
 
-format:
+format: 
 	astyle -bps4 $(SRCS)
 
-check:
-	cppcheck -v --enable=all $(SRCS)
+check: runtest
+	cppcheck -v --inline-suppr --suppress=unmatchedSuppression --enable=all $(SRCS)
 
 # DO NOT DELETE

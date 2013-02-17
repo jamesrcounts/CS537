@@ -41,7 +41,7 @@ end
 
 def scan_for_new_files
   has_new_files = false
-  has_new_files = scan_for_new_files_for("**/*.cpp") | scan_for_new_files_for("**/*.h")
+  has_new_files = scan_for_new_files_for("**/*.cpp") | scan_for_new_files_for("**/*.h") | scan_for_new_files_for("Makefile")
   has_new_files
 end
 
