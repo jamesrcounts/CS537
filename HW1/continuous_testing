@@ -1,0 +1,98 @@
+#!/usr/bin/env ruby
+
+@all_files ={}
+
+class ChangedFile
+  attr_accessor :name,:last_changed_time
+
+  def initialize(name)
+    @name = name
+    @last_changed_time = File.mtime(name)
+  end
+
+  def has_changed?
+    @last_changed_time < File.mtime(@name)
+  end
+
+  def update
+    @last_changed_time = File.mtime(@name)
+  end
+
+  def was_deleted?
+    not File.exists?(@name)
+  end
+end
+
+
+class BuildMessage
+  def initialize(error_items)
+    @error_items = error_items
+  end
+
+  def successful
+    @error_items.length == 0
+  end
+
+  def message
+    successful ? "Build Successful" : @error_items.join("\r\n")
+  end
+end
+
+
+def scan_for_new_files
+  has_new_files = false
+  has_new_files = scan_for_new_files_for("**/*.cpp") | scan_for_new_files_for("**/*.h")
+  has_new_files
+end
+
+def scan_for_new_files_for(pattern)
+  has_new_files = false
+  Dir.glob(pattern).each do|file|
+    unless (@all_files.key?(file))
+      has_new_files = true
+      @all_files[file] = ChangedFile.new(file)
+    end
+  end
+  has_new_files
+end
+
+def remove_all_deleted
+  remaining = @all_files.select{|path,item| ! item.was_deleted?}
+  files_were_deleted = remaining.length != @all_files.length
+  @all_files = remaining
+  files_were_deleted
+end
+
+def changes_have_occured
+  return scan_for_new_files | remove_all_deleted | files_have_changed
+end
+
+def files_have_changed
+  has_changed = false
+  @all_files.each do|path,file|
+    has_changed |= file.has_changed?
+    file.update
+  end
+  return has_changed
+end
+
+def get_errors_in(output)
+  error_pattern = /(?<!0\s)failed|undefined|[Ee]rror|FAIL|[^a]style|warning|performance|portability|information/
+  output.split("\n").select{|item| error_pattern =~ item}
+end
+
+def notify(build_message)
+  puts "#{build_message.message}"
+end
+
+def monitor
+  if changes_have_occured
+    errors = get_errors_in(`make 2>&1`)
+    notify(BuildMessage.new(errors))
+  end
+end
+
+while true do
+  monitor
+  sleep(1)
+end
