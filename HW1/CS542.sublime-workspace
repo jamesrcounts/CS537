@@ -1,0 +1,486 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"res",
+				"result_size"
+			],
+			[
+				"resul",
+				"result_size"
+			],
+			[
+				"bu",
+				"buf_size"
+			],
+			[
+				"resu",
+				"result"
+			],
+			[
+				"strc",
+				"string_cat"
+			],
+			[
+				"cstr",
+				"c_str"
+			],
+			[
+				"socket",
+				"socklen_t"
+			],
+			[
+				"ac",
+				"accept_result"
+			],
+			[
+				"ser",
+				"servaddr"
+			],
+			[
+				"li",
+				"listenfd"
+			],
+			[
+				"se",
+				"server_address"
+			],
+			[
+				"conn",
+				"connection"
+			],
+			[
+				"lis",
+				"listen_result"
+			],
+			[
+				"server",
+				"server_socket"
+			],
+			[
+				"str",
+				"string"
+			],
+			[
+				"scan",
+				"scan_for_new_files_for"
+			],
+			[
+				"serv",
+				"server_address"
+			],
+			[
+				"Swap",
+				"SwapIntPointers"
+			],
+			[
+				"cat",
+				"category"
+			],
+			[
+				"mis",
+				"missionaries_on_right"
+			],
+			[
+				"Init",
+				"Initialize"
+			],
+			[
+				"cur",
+				"current_state"
+			],
+			[
+				"Miss",
+				"MissionariesHere"
+			],
+			[
+				"SafeNo",
+				"SafeNoMissionariesThere"
+			],
+			[
+				"Saf",
+				"SafeNoMissionariesHere"
+			],
+			[
+				"Mi",
+				"MissionariesThere"
+			],
+			[
+				"Cann",
+				"CannibalsThere"
+			],
+			[
+				"C",
+				"CannibalsThere"
+			],
+			[
+				"Mis",
+				"MissionariesThere"
+			],
+			[
+				"Sel",
+				"SelectNext"
+			],
+			[
+				"Sele",
+				"SelectNext"
+			],
+			[
+				"Ca",
+				"CannibalsHere"
+			],
+			[
+				"ASS",
+				"ASSERT_FALSE"
+			],
+			[
+				"Ge",
+				"GenerateMoves"
+			],
+			[
+				"be",
+				"beginend	$1.begin(), $1.end()"
+			],
+			[
+				"Es",
+				"EstimateCost"
+			],
+			[
+				"Est",
+				"EstimateReturnToInitialStateCost"
+			],
+			[
+				"Can",
+				"CannibalsOnRight"
+			],
+			[
+				"miss",
+				"missionaries"
+			],
+			[
+				"cann",
+				"cannibals_on_right"
+			],
+			[
+				"A",
+				"ASSERT_TRUE"
+			],
+			[
+				"M",
+				"MoveMixedLeft"
+			],
+			[
+				"ASSE",
+				"ASSERT_STRING_EQUALS"
+			],
+			[
+				"MoveT",
+				"MoveTwoMissionariesRight"
+			],
+			[
+				"Mov",
+				"MovingRight"
+			],
+			[
+				"S",
+				"SelectMovesWithMixedFromLeft"
+			],
+			[
+				"Ver",
+				"VerifySelectedMoves"
+			],
+			[
+				"Select",
+				"SelectMixedMoveFromRight"
+			],
+			[
+				"VerifySe",
+				"VerifySelectedMoves"
+			],
+			[
+				"Gen",
+				"GenerateAllMoves"
+			],
+			[
+				"boa",
+				"boat_moving_right"
+			],
+			[
+				"VerifyB",
+				"VerifyBoatPositionForMoveFromLeft"
+			],
+			[
+				"Bo",
+				"BoatOnRight"
+			],
+			[
+				"VerifyBo",
+				"VerifyBoatPositionForMoveFromLeft"
+			],
+			[
+				"for",
+				"forv	Vector For Loop"
+			],
+			[
+				"Veri",
+				"VerifyMoves"
+			],
+			[
+				"CannibalU",
+				"VerifyCannibalUnderpopulation"
+			],
+			[
+				"V",
+				"VerifyCannibalException"
+			],
+			[
+				"VerifyMi",
+				"VerifyMissonaryException"
+			],
+			[
+				"Verif",
+				"VerifyIntermediateRightState"
+			],
+			[
+				"ca",
+				"cannibals_on_right"
+			],
+			[
+				"mission",
+				"missionaries_on_right"
+			],
+			[
+				"Ass",
+				"ASSERT_STRING_EQUALS"
+			],
+			[
+				"mi",
+				"missionaries"
+			],
+			[
+				"canni",
+				"cannibals_moving"
+			],
+			[
+				"sc",
+				"scan_for_new_files_for"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/jim/Documents/github/CS542/HW3/String.cpp",
+			"settings":
+			{
+				"buffer_size": 4586,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 33.0,
+		"selected_items":
+		[
+		],
+		"width": 404.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/jim/Documents/github/CS542/HW3/test.cpp",
+		"/home/jim/Documents/github/CS542/HW3/hw3.cpp",
+		"/home/jim/Documents/github/CS542/HW3/Makefile",
+		"/home/jim/Documents/github/CS542/HW3/String.h",
+		"/home/jim/Documents/github/CS542/HW3/String.cpp",
+		"/home/jim/Documents/github/CS537/HW1/continuous_testing",
+		"/home/jim/Documents/github/sockets/caseClient.c",
+		"/home/jim/Documents/github/sockets/caseServer.c",
+		"/home/jim/Documents/github/CS537/HW1/server.h",
+		"/home/jim/Documents/github/CS542.o/HW2/Makefile",
+		"/home/jim/Documents/github/CS542/HW2/LinkedStack.h",
+		"/home/jim/Documents/github/CS542/HW2/main.cpp",
+		"/home/jim/Documents/github/CS571/Final/main.cpp",
+		"/home/jim/Documents/github/CS571/Final/continuous_testing",
+		"/home/jim/Documents/github/CS542/HW2/LinkedStack.cpp",
+		"/home/jim/Documents/github/CS542/HW2/continuous.rb",
+		"/home/jim/Documents/github/CS542/HW2/CharLinkedListPair.h",
+		"/home/jim/Documents/github/CS571/HW7/tests.txt",
+		"/home/jim/Documents/github/CS571/HW7/Makefile",
+		"/home/jim/Downloads/icbr/mcmops.mops",
+		"/home/jim/Downloads/icbr/mcdmap.mops",
+		"/home/jim/Downloads/icbr/mcdmap.lsp",
+		"/home/jim/Documents/github/CS571/HW7/interleave.clisp",
+		"/home/jim/Dropbox/cs571RY/LispFiles/inter.lsp",
+		"/home/jim/Documents/github/CS571/HW7/continuous_testing",
+		"/home/jim/Dropbox/cs571RY/LispFiles/eliza.lsp",
+		"/home/jim/Documents/github/CS571/Final/Test.h",
+		"/home/jim/Documents/github/CS571/Final/TestFramework.h",
+		"/home/jim/Documents/github/CS571/Final/Program.h",
+		"/home/jim/Documents/github/CS571/Final/CrossingState.h",
+		"/home/jim/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/jim/Documents/github/CS571/Final/Move.h",
+		"/home/jim/Documents/github/CS571/Final/Makefile",
+		"/home/jim/Documents/dnrtv_dotnet_bootcamp_prep/continuous_testing"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"endif",
+			"Yfbps4",
+			"clilen",
+			"connfd",
+			"cliaddr",
+			"clilen",
+			"connfd",
+			"tid",
+			"cliaddr",
+			"backlog",
+			"top",
+			"print",
+			"IsS"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"connection",
+			"client_address",
+			"last"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/jim/Documents/github/CS542/HW3/String.cpp",
+					"settings":
+					{
+						"buffer_size": 4586,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4318,
+								4318
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3740.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 112.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}

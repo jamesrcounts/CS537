@@ -34,7 +34,8 @@ class BuildMessage
   end
 
   def message
-    successful ? "Build Successful" : @error_items.join("\r\n")
+    message = successful ? "Build Successful" : @error_items.join("\r\n")
+    "#{Time.now.inspect}\n#{message}"
   end
 end
 
@@ -77,12 +78,12 @@ def files_have_changed
 end
 
 def get_errors_in(output)
-  error_pattern = /(?<!0\s)failed|undefined|[Ee]rror|FAIL|[^a]style|warning|performance|portability|information/
+  error_pattern = /Broken|(?<!0\s)failed|undefined|[Ee]rror|FAIL|[^a]style|warning|performance|portability|information/
   output.split("\n").select{|item| error_pattern =~ item}
 end
 
 def notify(build_message)
-  puts "#{build_message.message}"
+  puts  "#{build_message.message}"
 end
 
 def monitor

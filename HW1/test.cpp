@@ -18,104 +18,102 @@ Homework 1
 
 using namespace std;
 using namespace igloo;
-void SwapIntPointers(int * a, int * b)
+
+class Server
 {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
+private:
+    int socket_fd;
+    struct sockaddr_in addr;
 
-Context(SwappingIntPointers)
-{
-    Spec(TwoIntValuesAreSwapped)
+    void acquire_socket()
     {
-        int a = 37;
-        int b = 42;
-        SwapIntPointers(&a, &b);
-        Assert::That(a, Equals(42));
-        Assert::That(b, Equals(37));
+        socket_fd = socket( AF_INET, SOCK_STREAM, 0 );
     }
 
-};
-
-/*
-As a server,
-I want to listen on a socket,
-So that I can answer requests.
-*/
-Context(ListeningOnSocket)
-{
-    // cppcheck-suppress unusedFunction
-    void SetUp()
+    void parse_address( string address_spec )
     {
-        port = 80;
-        address = string("144.37.12.45");
-        client_socket = -1;
-        connection_result = -1;
+        unsigned found = address_spec.find_first_of( ":" );
 
-        client_socket = socket(AF_INET, SOCK_STREAM, 0);
+        if ( found != string::npos )
+        {
+            address_spec[found] = ' ';
+        }
 
-        bzero(&server_address, sizeof(server_address));
-        server_address.sin_family = AF_INET;
-        server_address.sin_addr.s_addr = inet_addr(address.c_str());
-        server_address.sin_port = htons(port);
+        stringstream buffer( address_spec );
+        string a[2];
 
-        connection_result = connect(
-                                client_socket,
-                                (struct sockaddr *) &server_address,
-                                sizeof(server_address));
+        for ( int i = 0; i < 2; ++i )
+        {
+            buffer >> a[i];
+        }
 
-        request = "GET / HTTP/1.0\n\n";
-        written_bytes = write(client_socket, (void *)request.c_str(), request.size());
-
-        buffer = new char[256];
-        read_bytes = read(client_socket, buffer, 3);
-        response = string(buffer);
-        delete buffer;
-
+        bzero( &addr, sizeof( addr ) );
+        addr.sin_family = AF_INET;
+        addr.sin_addr.s_addr = inet_addr( a[0].c_str() );
+        addr.sin_port = htons( atoi( a[1].c_str() ) );
     }
 
-    Spec(GivenASocket)
+public:
+    Server( string address )
     {
-        Assert::That(client_socket, IsGreaterThan(-1));
+        acquire_socket();
+        parse_address( address );
     }
 
-    Spec(AndAnAddress)
+    ~Server()
     {
-        Assert::That(server_address.sin_family, Equals(AF_INET));
-        Assert::That(server_address.sin_addr.s_addr, Equals(inet_addr(address.c_str())));
-        Assert::That(server_address.sin_port, Equals(htons(port)));
+        close( socket_fd );
     }
 
-    Spec(AndAConnection)
+    struct sockaddr_in get_address()
     {
-        Assert::That(connection_result, Equals(0));
+        return addr;
     }
 
-    Spec(WhenISendARequest)
+    int get_descriptor()
     {
-        Assert::That((int)written_bytes, Equals((int)request.size()));
+        return socket_fd;
     }
 
-    Spec(ThenIShouldGetAResponse)
-    {
-        Assert::That(read_bytes, !Equals(-1));
-        Assert::That(response, Equals("OK\n"));
-    }
-
-    char * buffer;
-    string address;
-    string request;
-    string response;
-    int port;
-    int client_socket;
-    int connection_result;
-    ssize_t read_bytes ;
-    ssize_t written_bytes;
-    struct sockaddr_in server_address;
 };
 
 int main()
 {
     return TestRunner::RunAllTests();
 }
+
+Context( StandingUpAServer )
+{
+    Spec( AcquireAndReleaseSocketFileDescriptor )
+    {
+        int listenfd = -1;
+        Server s( "127.0.0.1:8888" );
+        listenfd = s.get_descriptor();
+        Assert::That( listenfd, !Equals( -1 ) );
+    }
+
+    Spec( ConfigureAnAddress )
+    {
+        struct sockaddr_in servaddr;
+
+        Server s( "127.0.0.1:8888" );
+        servaddr = s.get_address();
+
+        AssertThat( servaddr.sin_family, Equals( AF_INET ) );
+        AssertThat( servaddr.sin_addr.s_addr, Equals( inet_addr( "127.0.0.1" ) ) );
+        AssertThat( servaddr.sin_port, Equals( htons( 8888 ) ) ) ;
+    }
+
+    Spec( BindSocketToAddress )
+    {
+        Server s( "127.0.0.1:8888" );
+        struct sockaddr_in servaddr = s.get_address();
+
+        int bind_result = -1;
+        bind_result = bind(
+                          s.get_descriptor(),
+                          ( struct sockaddr * )&servaddr,
+                          sizeof( servaddr ) );
+        Assert::That( bind_result, !Equals( -1 ) );
+    }
+};

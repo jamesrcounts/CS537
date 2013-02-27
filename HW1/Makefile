@@ -6,7 +6,7 @@
 ###################################
 CC = g++
 INCLUDE = -I ../igloo
-CFLAGS = -O2 -Wall
+CFLAGS = -O2 -Wall -lpthread
 SRCS = test.cpp
 
 all: check 
@@ -24,9 +24,9 @@ object:
 	$(CC) -c LinkedStack.h LinkedStack.cpp $(CFLAGS)
 
 format: 
-	astyle -bps4 $(SRCS)
+	astyle -YfDHUbps4yj -k3 $(SRCS)
 
 check: runtest
-	cppcheck -v --inline-suppr --suppress=unmatchedSuppression --enable=all $(SRCS)
+	cppcheck -v --inline-suppr --enable=all $(SRCS)
 
 # DO NOT DELETE
