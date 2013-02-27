@@ -23,6 +23,9 @@ class Server
 {
 private:
     int socket_fd;
+    int bind_result;
+    int listen_result;
+    int queue_size;
     struct sockaddr_in addr;
 
     void acquire_socket()
@@ -55,14 +58,28 @@ private:
 
 public:
     Server( string address )
+        : socket_fd( -1 ), bind_result( -1 ), listen_result( -1 ), queue_size( 4 )
     {
-        acquire_socket();
         parse_address( address );
+        acquire_socket();
+        bind_address();
+        socket_listen();
     }
 
     ~Server()
     {
         close( socket_fd );
+    }
+
+    void bind_address()
+    {
+        if ( !is_bound() )
+        {
+            bind_result = bind(
+                              socket_fd,
+                              ( struct sockaddr * )&addr,
+                              sizeof( addr ) );
+        }
     }
 
     struct sockaddr_in get_address()
@@ -73,6 +90,24 @@ public:
     int get_descriptor()
     {
         return socket_fd;
+    }
+
+    bool is_bound()
+    {
+        return bind_result != -1;
+    }
+
+    bool is_listening()
+    {
+        return listen_result != -1;
+    }
+
+    void socket_listen()
+    {
+        if ( !is_listening() )
+        {
+            listen_result = listen( socket_fd, queue_size );
+        }
     }
 
 };
@@ -86,34 +121,41 @@ Context( StandingUpAServer )
 {
     Spec( AcquireAndReleaseSocketFileDescriptor )
     {
-        int listenfd = -1;
-        Server s( "127.0.0.1:8888" );
-        listenfd = s.get_descriptor();
-        Assert::That( listenfd, !Equals( -1 ) );
+        Assert::That( server->get_descriptor(), !Equals( -1 ) );
     }
 
     Spec( ConfigureAnAddress )
     {
         struct sockaddr_in servaddr;
-
-        Server s( "127.0.0.1:8888" );
-        servaddr = s.get_address();
-
+        servaddr = server->get_address();
         AssertThat( servaddr.sin_family, Equals( AF_INET ) );
-        AssertThat( servaddr.sin_addr.s_addr, Equals( inet_addr( "127.0.0.1" ) ) );
+        AssertThat(
+            servaddr.sin_addr.s_addr,
+            Equals( inet_addr( "127.0.0.1" ) ) );
         AssertThat( servaddr.sin_port, Equals( htons( 8888 ) ) ) ;
     }
 
     Spec( BindSocketToAddress )
     {
-        Server s( "127.0.0.1:8888" );
-        struct sockaddr_in servaddr = s.get_address();
+        Assert::That( server->is_bound(), Equals( true ) );
+    }
 
-        int bind_result = -1;
-        bind_result = bind(
-                          s.get_descriptor(),
-                          ( struct sockaddr * )&servaddr,
-                          sizeof( servaddr ) );
-        Assert::That( bind_result, !Equals( -1 ) );
+    Spec( ListenForIncomingConnections )
+    {
+        Assert::That( server->is_listening(), Equals( true ) );
+    }
+
+    Server *server;
+
+    // cppcheck-suppress unusedFunction
+    void SetUp()
+    {
+        server = new Server( "127.0.0.1:8888" );
+    }
+
+    // cppcheck-suppress unusedFunction
+    void TearDown()
+    {
+        delete server;
     }
 };

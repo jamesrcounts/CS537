@@ -283,11 +283,15 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 33.0,
+		"height": 75.0,
 		"selected_items":
 		[
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			]
 		],
-		"width": 404.0
+		"width": 449.0
 	},
 	"console":
 	{

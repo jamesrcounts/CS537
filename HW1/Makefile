@@ -27,6 +27,6 @@ format:
 	astyle -YfDHUbps4yj -k3 $(SRCS)
 
 check: runtest
-	cppcheck -v --inline-suppr --enable=all $(SRCS)
+	cppcheck -v --inline-suppr --suppress=unmatchedSuppression --enable=all $(SRCS)
 
 # DO NOT DELETE
