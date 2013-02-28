@@ -1,6 +1,13 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 
+#include <arpa/inet.h>
+#include <stdlib.h>
+#include <sstream>
+#include <string>
+#include <strings.h>
+#include <unistd.h>
+
 using namespace std;
 
 class Socket

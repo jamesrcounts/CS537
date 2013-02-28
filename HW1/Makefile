@@ -14,14 +14,20 @@ all: check
 runtest: test
 	./test
 
-test: test.cpp format
+ClientTest: Client.gch clientTest.cpp format
+	$(CC) $(INCLUDE) clientTest.cpp -o clientTest $(CFLAGS)
+	
+test: Client.gch Socket.gch Server.gch test.cpp format
 	$(CC) $(INCLUDE) test.cpp -o test $(CFLAGS)	
 
-server.o: 
-	$(CC) $(INCLUDE) -c server.h $(CFLAGS)
+Socket.gch: Socket.h
+	$(CC) $(INCLUDE) -c Socket.h $(CFLAGS)
 
-object: 
-	$(CC) -c LinkedStack.h LinkedStack.cpp $(CFLAGS)
+Server.gch: Socket.gch
+	$(CC) $(INCLUDE) -c Server.h $(CFLAGS)
+
+Client.gch: Socket.gch
+	$(CC) $(INCLUDE) -c Client.h $(CFLAGS)
 
 format: 
 	astyle -YfDHUbps4yj -k3 $(SRCS)
