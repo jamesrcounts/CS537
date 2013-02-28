@@ -1,5 +1,5 @@
 #ifndef CLIENT_H
-#define CLIENT_H 
+#define CLIENT_H
 
 #include <string.h>
 #include "Socket.h"
