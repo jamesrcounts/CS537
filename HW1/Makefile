@@ -7,26 +7,17 @@
 CC = g++
 INCLUDE = -I ../igloo
 CFLAGS = -O2 -Wall -lpthread
-SRCS = test.cpp
+SRCS = httpClient.cpp
 
-all: check 
+all:  httpClient check
 
-runtest: test
-	./test
-
-test: test.cpp format
-	$(CC) $(INCLUDE) test.cpp -o test $(CFLAGS)	
-
-server.o: 
-	$(CC) $(INCLUDE) -c server.h $(CFLAGS)
-
-object: 
-	$(CC) -c LinkedStack.h LinkedStack.cpp $(CFLAGS)
+httpClient: httpClient.cpp
+	g++ httpClient.cpp -o httpClient
 
 format: 
 	astyle -YfDHUbps4yj -k3 $(SRCS)
 
-check: runtest
-	cppcheck -v --inline-suppr --suppress=unmatchedSuppression --enable=all $(SRCS)
+check: format
+	cppcheck -v --inline-suppr  --enable=all $(SRCS)
 
 # DO NOT DELETE
