@@ -6,10 +6,13 @@
 ###################################
 CC = g++
 INCLUDE = -I ../igloo
-CFLAGS = -O2 -Wall -lpthread
-SRCS = httpClient.cpp
+CFLAGS = -lpthread
+SRCS = httpClient.cpp httpServer.cpp
 
-all:  httpClient check
+all:  httpClient httpServer check
+
+httpServer: httpServer.cpp
+	g++ httpServer.cpp -o httpServer $(CFLAGS)
 
 httpClient: httpClient.cpp
 	g++ httpClient.cpp -o httpClient

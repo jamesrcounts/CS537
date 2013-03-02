@@ -60,7 +60,7 @@ void http_client( FILE *fp, int socket_fd )
     int buffer_size = 1024;
     char buffer[buffer_size];
 
-    string request( "GET / HTTP/1.0\n\n" );
+    string request( "HEAD /test.html HTTP/1.0\n\n" );
 
     write( socket_fd, ( void * )request.c_str(), strlen( request.c_str() ) );
 
