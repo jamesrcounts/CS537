@@ -7,18 +7,22 @@
 CC = g++
 INCLUDE = -I ../igloo
 CFLAGS = -O2 -Wall -lpthread
-SRCS = serverTest.cpp clientTest.cpp Socket.h Server.h Client.h
+SRCS = serverTest.cpp clientTest.cpp Socket.h Server.h Client.h integrationTest.cpp
 
 all: check 
 
-runtest: ServerTest ClientTest
+runtest: ServerTest ClientTest IntegrationTest
+	./integrationTest
 	./serverTest
 	./clientTest
+
+IntegrationTest: Client.gch Server.gch integrationTest.cpp format
+	$(CC) $(INCLUDE) integrationTest.cpp -o integrationTest $(CFLAGS)
 
 ClientTest: Client.gch clientTest.cpp format
 	$(CC) $(INCLUDE) clientTest.cpp -o clientTest $(CFLAGS)	
 
-ServerTest: Client.gch Socket.gch Server.gch serverTest.cpp format
+ServerTest: Server.gch serverTest.cpp format
 	$(CC) $(INCLUDE) serverTest.cpp -o serverTest $(CFLAGS)	
 
 Socket.gch: Socket.h

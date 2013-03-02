@@ -1,26 +1,14 @@
 #include <igloo/igloo.h>
-#include <arpa/inet.h>
-#include <errno.h>
-#include <netinet/in.h>
-#include <stdio.h>
-#include <string.h>
-#include <strings.h>
-#include <sys/socket.h>
-#include <unistd.h>
 
 #include "Client.h"
-#include "Server.h"
-#include "Socket.h"
 
 using namespace std;
 using namespace igloo;
-
 
 int main()
 {
     return TestRunner::RunAllTests();
 }
-
 
 Context( MakingAClientRequest )
 {

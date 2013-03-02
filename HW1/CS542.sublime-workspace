@@ -4,8 +4,12 @@
 		"selected_items":
 		[
 			[
+				"c",
+				"copy_buffer"
+			],
+			[
 				"res",
-				"result_size"
+				"result"
 			],
 			[
 				"resul",
@@ -271,14 +275,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "/home/jim/Documents/github/CS542/HW3/String.cpp",
-			"settings":
-			{
-				"buffer_size": 4586,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -308,11 +304,21 @@
 	},
 	"file_history":
 	[
+		"/home/jim/Documents/github/CS542/HW4/continuous_testing",
+		"/home/jim/Documents/github/CS542/HW4/test.cpp",
+		"/home/jim/Documents/github/CS542/HW4/log.txt",
+		"/home/jim/Documents/github/CS542/HW4/String.h",
+		"/home/jim/Documents/github/CS542/HW4/String.cpp",
+		"/home/jim/Documents/github/CS542/HW4/hw4.cpp",
+		"/home/jim/Documents/github/CS542/HW3/String.cpp",
+		"/home/jim/Documents/github/CS542/HW4/Makefile",
+		"/home/jim/Documents/github/CS542/HW4/Makefile.orig",
+		"/home/jim/Documents/github/CS542/HW4/hw3.cpp",
+		"/home/jim/Documents/github/CS542/HW4/hw3.cpp.orig",
 		"/home/jim/Documents/github/CS542/HW3/test.cpp",
 		"/home/jim/Documents/github/CS542/HW3/hw3.cpp",
 		"/home/jim/Documents/github/CS542/HW3/Makefile",
 		"/home/jim/Documents/github/CS542/HW3/String.h",
-		"/home/jim/Documents/github/CS542/HW3/String.cpp",
 		"/home/jim/Documents/github/CS537/HW1/continuous_testing",
 		"/home/jim/Documents/github/sockets/caseClient.c",
 		"/home/jim/Documents/github/sockets/caseServer.c",
@@ -349,16 +355,30 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
+			"/home/jim/Documents/github/CS542/HW4"
 		]
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"free_buffer",
+			"p",
+			"len",
+			"leln",
+			"len",
+			"buf",
+			"size",
+			"len",
+			"size",
+			"len",
+			"size",
+			"hw3",
+			"HW3",
 			"endif",
 			"Yfbps4",
 			"clilen",
@@ -379,6 +399,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"length()",
+			"hw4",
 			"connection",
 			"client_address",
 			"last"
@@ -394,34 +416,6 @@
 		{
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "/home/jim/Documents/github/CS542/HW3/String.cpp",
-					"settings":
-					{
-						"buffer_size": 4586,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4318,
-								4318
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3740.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

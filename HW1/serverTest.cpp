@@ -1,24 +1,12 @@
 /***************************************************
-test.cpp
-
 Jim Counts & Michael Ngyuen
 CS 537 - Data Communications
 Homework 1
 **************************************************/
 
 #include <igloo/igloo.h>
-#include <arpa/inet.h>
-#include <errno.h>
-#include <netinet/in.h>
-#include <stdio.h>
-#include <string.h>
-#include <strings.h>
-#include <sys/socket.h>
-#include <unistd.h>
 
-#include "Client.h"
 #include "Server.h"
-#include "Socket.h"
 
 using namespace std;
 using namespace igloo;

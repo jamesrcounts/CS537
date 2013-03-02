@@ -11,17 +11,28 @@ private:
     int queue_size;
 
 public:
-    Server( string address )
-        :  bind_result( -1 ), listen_result( -1 ), queue_size( 4 )
+    Server( string address, int options = 0 )
+        :   bind_result( -1 ), listen_result( -1 ), queue_size( 4 )
     {
         parse_address( address );
-        acquire_socket();
+        acquire_socket( options );
         bind_address();
         socket_listen();
     }
 
     ~Server()
     {
+    }
+
+    int accept_connection()
+    {
+        struct sockaddr_in cliaddr;
+        socklen_t clilen = sizeof( cliaddr );
+        int connfd = accept4( get_descriptor(),
+                              ( struct sockaddr * ) &cliaddr,
+                              &clilen,
+                              SOCK_NONBLOCK );
+        return connfd;
     }
 
     void bind_address()
@@ -55,6 +66,7 @@ public:
                                 queue_size );
         }
     }
+
 };
 
 #endif
