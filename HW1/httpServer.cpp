@@ -14,13 +14,19 @@
 #include <iostream>
 #include <sstream>
 #include <time.h>
-
+#include <iostream>
+#include <fstream>
 
 #define MAXLINE	32768
 
 using namespace std;
 
 const int backlog = 4;
+
+string fix_path( string path )
+{
+    return "." + path;
+}
 
 void serverHeader( int fd )
 {
@@ -135,9 +141,16 @@ void putResponse( string protocol, string path, string full_request, int fd )
     }
 
     cout << contents << endl;
+    path = fix_path( path );
+    ofstream put_file;
+    put_file.open( path.c_str() );
+    put_file << contents;
+    put_file.close();
+
     ok( fd, protocol );
     newLine( fd );
 }
+
 
 void headerResponse( string protocol, string path, int fd )
 {
