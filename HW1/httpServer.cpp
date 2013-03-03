@@ -84,6 +84,13 @@ void ok( int fd, string  protocol )
 
 }
 
+void serverError( int fd, string protocol )
+{
+    string err( protocol );
+    err += " 500 Internal Server Error\n";
+    write( fd, err.c_str(), err.size() );
+}
+
 void notFound( int fd, string protocol )
 {
     string notfound( protocol );
@@ -97,6 +104,22 @@ void cont( int fd, string protocol )
     string c( protocol );
     c += " 100 Continue\n\n";
     write( fd, c.c_str(), c.size() );
+}
+
+void deleteResponse( string protocol, string path, int fd )
+{
+    path = fix_path( path );
+
+    if ( remove( path.c_str() ) == 0 )
+    {
+        ok( fd, protocol );
+    }
+    else
+    {
+        serverError( fd, protocol );
+    }
+
+    newLine( fd );
 }
 
 void putResponse( string protocol, string path, string full_request, int fd )
@@ -196,6 +219,29 @@ void fileResponse( string protocol,  string path, int fd )
     }
 }
 
+void httpDelete( string request, int fd )
+{
+    stringstream request_stream( request );
+
+    string parts[3];
+    string p;
+
+    int i = 0;
+
+    while ( request_stream >> p )
+    {
+        parts[i] = p;
+        ++i;
+    }
+
+    cout << "COMMAND: " << parts[0] << endl
+         << "PATH: " << parts[1] << endl
+         << "PROTOCOL: " << parts[2] << endl;
+
+    deleteResponse( parts[2], parts[1], fd );
+    close( fd );
+}
+
 void httpPut( string request, string full_request, int fd )
 {
     stringstream request_stream( request );
@@ -219,7 +265,6 @@ void httpPut( string request, string full_request, int fd )
     close( fd );
 
 }
-
 
 void httpHead( string request, int fd )
 {
@@ -307,6 +352,10 @@ void *clientHandler( void *arg )
     else if ( command == "PUT" )
     {
         httpPut( s, request.str(), fd );
+    }
+    else if ( command == "DELETE" )
+    {
+        httpDelete( s, fd );
     }
     else
     {
