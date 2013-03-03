@@ -86,6 +86,59 @@ void notFound( int fd, string protocol )
 
 }
 
+void cont( int fd, string protocol )
+{
+    string c( protocol );
+    c += " 100 Continue\n\n";
+    write( fd, c.c_str(), c.size() );
+}
+
+void putResponse( string protocol, string path, string full_request, int fd )
+{
+    int length = 0;
+    char line[256];
+    stringstream r( full_request );
+
+    while ( r.getline( line, 256 ) )
+    {
+        stringstream p( line );
+        string h;
+        p >> h;
+
+        if ( h == "Content-Length:" )
+        {
+            p >> length;
+            break;
+        }
+    }
+
+    if ( length == 0 )
+    {
+        notFound( fd, protocol );
+    }
+
+    cout << "LENGTH: " << length << endl;
+
+    string contents;
+    int chunk_sz = ( length < MAXLINE ) ? length : MAXLINE;
+    char str[chunk_sz];
+
+    while ( contents.size() < length )
+    {
+        bzero( str, chunk_sz );
+        int read_bytes = read( fd, str, chunk_sz );
+
+        if ( read_bytes )
+        {
+            contents += str;
+        }
+    }
+
+    cout << contents << endl;
+    ok( fd, protocol );
+    newLine( fd );
+}
+
 void headerResponse( string protocol, string path, int fd )
 {
     path = "." + path;
@@ -129,6 +182,31 @@ void fileResponse( string protocol,  string path, int fd )
         write( fd, contents.c_str(), strlen( contents.c_str() ) );
     }
 }
+
+void httpPut( string request, string full_request, int fd )
+{
+    stringstream request_stream( request );
+
+    string parts[3];
+    string p;
+
+    int i = 0;
+
+    while ( request_stream >> p )
+    {
+        parts[i] = p;
+        ++i;
+    }
+
+    cout << "COMMAND: " << parts[0] << endl
+         << "PATH: " << parts[1] << endl
+         << "PROTOCOL: " << parts[2] << endl;
+
+    putResponse( parts[2], parts[1], full_request, fd );
+    close( fd );
+
+}
+
 
 void httpHead( string request, int fd )
 {
@@ -213,25 +291,16 @@ void *clientHandler( void *arg )
     {
         httpHead( s, fd );
     }
+    else if ( command == "PUT" )
+    {
+        httpPut( s, request.str(), fd );
+    }
     else
     {
         cout << "Unknown COMMAND: " << command << endl;
         close( fd );
     }
 
-    /*    for ( i = 0; i < strlen( str ); i++ )
-        {
-            cout << str[i] << endl;
-
-            if ( str[i] >= 97 && str[i] <= 122 )
-            {
-                str[i] = ( 0 <= str[i] - 32 ) ? str[i] - 32 : 0 ;
-            }
-        }
-
-        write( fd, str, strlen( str ) );
-    */
-    // close( fd );
 }
 
 int main( int argc, char *argv[] )
