@@ -7,17 +7,17 @@
 CC = g++
 INCLUDE = -I ../igloo
 CFLAGS = -lpthread
-SRCS = httpClient.cpp httpServer.cpp HttpHandler.h test.cpp
+SRCS = httpClient.cpp httpServer.cpp HttpHandler.h test.cpp HttpRequest.h
 
 all:  httpClient httpServer runtest check
 
 runtest: test
 	./test
 	
-test: test.cpp httpServer
+test: test.cpp HttpHandler.h 
 	g++ $(INCLUDE) test.cpp -o test 
 
-httpServer: httpServer.cpp HttpHandler.h
+httpServer: httpServer.cpp HttpHandler.h HttpRequest.h
 	g++ httpServer.cpp -o httpServer $(CFLAGS)
 
 httpClient: httpClient.cpp

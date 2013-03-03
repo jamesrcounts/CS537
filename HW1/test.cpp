@@ -10,6 +10,22 @@ using namespace std;
 
 Context( GatheringInformation )
 {
+    Spec( TestForExistence )
+    {
+        AssertThat( HttpHandler::FileExists( "foo" ), Equals( false ) );
+        AssertThat( HttpHandler::FileExists( "test.cpp" ), Equals( true ) );
+    }
+
+    Spec( GetContentLength )
+    {
+        string header( "PUT /log2.txt HTTP/1.0" );
+        header += "\nHost: 127.0.0.1:8901";
+        header += "\nContent-Length: 657\n";
+        int expected = 657;
+        int actual = HttpHandler::StreamLength( header );
+        Assert::That( actual, Equals( expected ) );
+    }
+
     Spec( GetFileSize )
     {
         const char *path = "test.cpp";
@@ -44,6 +60,33 @@ Context( GatheringInformation )
 
 Context( RespondingToRequests )
 {
+    Spec( WriteBadRequestStatus )
+    {
+        string expected( "HTTP/1.0 400 Bad Request\n" );
+        string actual = HttpHandler::StatusBadRequest( "HTTP/1.0" );
+        Assert::That( actual, Equals( expected ) );
+    }
+    Spec( WriteNotFoundStatus )
+    {
+        string expected( "HTTP/1.0 404 Not Found\n" );
+        string actual = HttpHandler::StatusNotFound( "HTTP/1.0" );
+        Assert::That( actual, Equals( expected ) );
+    }
+
+    Spec( WriteErrorStatus )
+    {
+        string expected( "HTTP/1.0 500 Internal Server Error\n" );
+        string actual = HttpHandler::StatusInternalError( "HTTP/1.0" );
+        Assert::That( actual, Equals( expected ) );
+    }
+
+    Spec( WriteOKStatus )
+    {
+        string expected( "HTTP/1.0 200 OK\n" );
+        string actual = HttpHandler::StatusOk( "HTTP/1.0" );
+        Assert::That( actual, Equals( expected ) );
+    }
+
     Spec( WriteContentLengthHeader )
     {
         string path( "test.cpp" );
@@ -51,7 +94,7 @@ Context( RespondingToRequests )
         expected += HttpHandler::SizeOf( path );
         expected += "\n";
         string actual = HttpHandler::ContentLengthHeader( path );
-        Assert::That( expected, Equals( actual ) );
+        Assert::That( actual, Equals( expected ) );
     }
     Spec( WriteLastModifiedHeader )
     {
