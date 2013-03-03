@@ -16,6 +16,7 @@
 #include <time.h>
 #include <iostream>
 #include <fstream>
+#include "HttpHandler.h"
 
 #define MAXLINE	32768
 
@@ -25,56 +26,34 @@ const int backlog = 4;
 
 string fix_path( string path )
 {
-    return "." + path;
+    return HttpHandler::FixupPath( path );
+}
+
+void writeTo( int fd, string message )
+{
+    write( fd, message.c_str(), message.size() );
 }
 
 void serverHeader( int fd )
 {
-    string server( "Server: myhttpd/1.0\n" );
-    write( fd, server.c_str(), server.size() );
+    writeTo( fd, HttpHandler::ServerHeader() );
 }
 
 void newLine( int fd )
 {
-    string newLine( "\n" );
-    write( fd, newLine.c_str(), newLine.size() );
+    writeTo( fd, HttpHandler::BlankLine() );
 }
 
 void lastModified( int fd, string path )
 {
-    struct stat statbuf;
-
-    if ( stat( path.c_str(), &statbuf ) != -1 )
-    {
-        string buf( "Last-Modified: " );
-        char tstr[80];
-
-        struct tm *timeinfo = localtime( &statbuf.st_mtime );
-
-        strftime( tstr, 80, "%c.", timeinfo );
-
-        buf += tstr;
-        buf += "\n";
-
-        write( fd, buf.c_str(), buf.size() );
-    }
+    writeTo( fd, HttpHandler::LastModifiedHeader( path ) );
 }
 
 void contentLength( int fd, string path )
 {
-    struct stat statbuf;
-
-    if ( stat( path.c_str(), &statbuf ) != -1 )
-    {
-        stringstream buf;
-        buf << "Content-Length: " << statbuf.st_size << endl;
-
-        string response = buf.str();
-        write( fd, response.c_str(), response.size() );
-    }
-
-
+    writeTo( fd, HttpHandler::ContentLengthHeader( path ) );
 }
+
 
 void ok( int fd, string  protocol )
 {
@@ -97,13 +76,6 @@ void notFound( int fd, string protocol )
     notfound += " 404 Not Found\n\n";
     write( fd, notfound.c_str(), notfound.size() );
 
-}
-
-void cont( int fd, string protocol )
-{
-    string c( protocol );
-    c += " 100 Continue\n\n";
-    write( fd, c.c_str(), c.size() );
 }
 
 void deleteResponse( string protocol, string path, int fd )
