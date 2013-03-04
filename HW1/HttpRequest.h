@@ -1,7 +1,13 @@
 #ifndef HTTPREQUEST_H
 #define HTTPREQUEST_H
 
+#include <string>
+#include <vector>
+#include "HttpHandler.h"
+
 #define MAXREAD 32768
+
+using namespace std;
 
 class HttpRequest
 {
@@ -9,28 +15,61 @@ public:
     HttpRequest();
     ~HttpRequest();
 
-    static void Delete( int fd, string header )
+    static void Delete( int fd, vector<string> tokens )
     {
-        vector<string> tokens = ParseHeader( header );
         WriteToStream( fd, HttpHandler::Delete( tokens[2], tokens[1] ) );
         close( fd );
     }
 
-    static void Get( int fd, string header )
+    static void Get( int fd, vector<string> tokens )
     {
-        vector<string> tokens = ParseHeader( header );
         HttpHandler::Get( fd, tokens[2], tokens[1] );
         close( fd );
     }
 
-    static void Head( int fd, string header )
+    static void Handle( int fd )
     {
-        vector<string> tokens = ParseHeader( header );
+        string request = ReadRequest( fd );
+        string header = ReadHeader( fd );
+
+        vector<string> tokens = ParseRequest( request );
+
+        if ( tokens[0] == "GET" )
+        {
+            Get( fd, tokens );
+        }
+        else if ( tokens[0] == "HEAD" )
+        {
+            Head( fd, tokens );
+        }
+        else if ( tokens[0] == "PUT" )
+        {
+            Put( fd, tokens, header );
+        }
+        else if ( tokens[0] == "DELETE" )
+        {
+            Delete( fd, tokens );
+        }
+        else
+        {
+            NotImplemented( fd, tokens );
+        }
+
+    }
+
+    static void Head( int fd, vector<string> tokens )
+    {
         WriteToStream( fd, HttpHandler::Head( tokens[2], tokens[1] ) );
         close( fd );
     }
 
-    static	vector<string> ParseHeader( string header )
+    static void NotImplemented( int fd, vector<string> request )
+    {
+        WriteToStream( fd, HttpHandler::StatusNotImplemented( request[2] ) );
+        close( fd );
+    }
+
+    static vector<string> ParseRequest( string header )
     {
         vector<string> tokens;
         stringstream header_stream( header );
@@ -45,9 +84,8 @@ public:
         return tokens;
     }
 
-    static void Put( int fd, string request, string header )
+    static void Put( int fd, vector<string> tokens, string header )
     {
-        vector<string> tokens = ParseHeader( request );
         WriteToStream( fd,
                        HttpHandler::Put( tokens[2], header, tokens[1], fd ) );
         close( fd );
@@ -55,26 +93,10 @@ public:
 
     static string ReadHeader( int fd )
     {
-        size_t idx = 0;
         char buffer[MAXREAD];
         bzero( buffer, MAXREAD );
 
-
-        while ( idx < ( MAXREAD - 1 ) && 1 == read( fd, &buffer[idx], 1 ) )
-        {
-            if ( ( 0 < idx &&
-                    buffer[idx] == '\n' &&
-                    buffer[idx - 1] == '\n' ) ||
-                    ( 3 < idx &&
-                      ( buffer[idx] == '\n' && buffer[idx - 1] == '\r' ) &&
-                      ( buffer[idx - 2] == '\n' && buffer[idx - 3] == '\r' ) ) )
-            {
-                break;
-            }
-
-            ++idx;
-        }
-
+        read( fd, buffer, MAXREAD - 1 );
         return string( buffer );
     }
 

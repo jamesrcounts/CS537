@@ -5,6 +5,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <strings.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 using namespace std;
@@ -165,6 +166,11 @@ public:
     static string StatusInternalError( string protocol )
     {
         return protocol + " 500 Internal Server Error\n";
+    }
+
+    static string StatusNotImplemented( string protocol )
+    {
+        return protocol + " 501 Not Implemented\n";
     }
 
     static string StatusNotFound( string protocol )
