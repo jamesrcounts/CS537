@@ -115,7 +115,7 @@ int main( int argc, char const *argv[] )
     struct timeval startat, endat;
     gettimeofday( &startat, NULL );
 
-    for ( ; i < ( 1000 ); ++i )
+    for ( ; i < ( 10 ); ++i )
     {
         int socket_fd = acquire_socket(
                             inet_addr( argv[1] ),

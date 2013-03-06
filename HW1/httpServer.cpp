@@ -85,8 +85,11 @@ int main( int argc, char *argv[] )
 
         if ( select( fdmax + 1, &read_fds, NULL, NULL, NULL ) == -1 )
         {
-            perror( "select" );
-            exit( 4 );
+            fprintf( stderr,
+                     "Select error, errno = %d (%s) \n",
+                     errno,
+                     strerror( errno ) );
+            return -1;
         }
 
         for ( int i = 0; i <= fdmax; i++ )
@@ -167,13 +170,13 @@ int main( int argc, char *argv[] )
 
                     HttpRequest::Handle( version, fd, request );
 
-                    if ( version == 1.0f )
-                    {
-                        close( fd );
-                        FD_CLR( fd, &master );
-                        cout << "Done with connection request: " << fd << endl;
-                    }
-
+                    /*      if ( version == 1.0f )
+                          {
+                              close( fd );
+                              FD_CLR( fd, &master );
+                              cout << "Done with connection request: " << fd << endl;
+                          }
+                    */
 
 
                 }
