@@ -56,21 +56,6 @@ public:
         return "." + path;
     }
 
-    static string Get( int fd, string protocol, string path )
-    {
-        string response = Head( protocol, path );
-        write( fd, response.c_str(), response.size() );
-
-        path = FixupPath( path );
-
-        if ( FileExists( path ) )
-        {
-            WriteFileToStream( fd, path );
-        }
-
-        return "";
-    }
-
     static string Head( string protocol, string path )
     {
         string response = StatusNotFound( protocol );
@@ -112,24 +97,6 @@ public:
         message += LastModified( path );
         message += "\n";
         return message;
-    }
-
-    static string Put( string protocol, string header, string path, int fd )
-    {
-        string response = StatusOk( protocol );
-
-        int length = StreamLength( header );
-
-        if ( length != 0 )
-        {
-            WriteFile( FixupPath( path ), ReadStream( fd, length ) );
-        }
-        else
-        {
-            response = StatusBadRequest( protocol );
-        }
-
-        return response + BlankLine();
     }
 
     static string ReadStream( int fd, int size )
@@ -229,34 +196,6 @@ public:
         out.close();
     }
 
-    static void WriteFileToStream( int fd, string path )
-    {
-        ifstream file( path.c_str(), ios::in | ios::binary | ios::ate );
 
-        if ( file.is_open() )
-        {
-            int size = ( int ) file.tellg();
-            int block_sz = ( size < 1024 ) ? size : 1024;
-            file.seekg( 0, ios::beg );
-
-            char block[block_sz];
-            int total_read = 0;
-
-            while ( total_read < size )
-            {
-                bzero( block, block_sz );
-                file.read( block, block_sz - 1 );
-                int read_bytes = file.gcount();
-
-                if ( read_bytes )
-                {
-                    write( fd, block, read_bytes );
-                    total_read += read_bytes;
-                }
-            }
-
-            file.close();
-        }
-    }
 };
 #endif

@@ -272,10 +272,34 @@
 	"buffers":
 	[
 		{
-			"file": "/home/jim/Documents/github/CS542/HW3/String.cpp",
+			"file": "/home/jim/Documents/github/CS542/HW4/String.cpp",
 			"settings":
 			{
-				"buffer_size": 4586,
+				"buffer_size": 2604,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jim/Documents/github/CS542/HW4/String.h",
+			"settings":
+			{
+				"buffer_size": 2028,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jim/Documents/github/CS542/HW5/continuous_testing",
+			"settings":
+			{
+				"buffer_size": 1998,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jim/Documents/github/CS542/HW5/Makefile",
+			"settings":
+			{
+				"buffer_size": 551,
 				"line_ending": "Unix"
 			}
 		}
@@ -308,11 +332,13 @@
 	},
 	"file_history":
 	[
+		"/home/jim/Documents/github/CS542/HW5/hw5.cpp",
+		"/home/jim/Documents/github/CS542/HW4/hw4.cpp",
+		"/home/jim/Documents/github/CS542/HW3/String.cpp",
 		"/home/jim/Documents/github/CS542/HW3/test.cpp",
 		"/home/jim/Documents/github/CS542/HW3/hw3.cpp",
 		"/home/jim/Documents/github/CS542/HW3/Makefile",
 		"/home/jim/Documents/github/CS542/HW3/String.h",
-		"/home/jim/Documents/github/CS542/HW3/String.cpp",
 		"/home/jim/Documents/github/CS537/HW1/continuous_testing",
 		"/home/jim/Documents/github/sockets/caseClient.c",
 		"/home/jim/Documents/github/sockets/caseServer.c",
@@ -359,6 +385,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"hw4",
 			"endif",
 			"Yfbps4",
 			"clilen",
@@ -379,6 +406,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"hw5",
 			"connection",
 			"client_address",
 			"last"
@@ -392,22 +420,23 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/home/jim/Documents/github/CS542/HW3/String.cpp",
+					"file": "/home/jim/Documents/github/CS542/HW4/String.cpp",
 					"settings":
 					{
-						"buffer_size": 4586,
+						"buffer_size": 2604,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4318,
-								4318
+								0,
+								0
 							]
 						],
 						"settings":
@@ -417,7 +446,89 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3740.0,
+						"translation.y": 760.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/jim/Documents/github/CS542/HW4/String.h",
+					"settings":
+					{
+						"buffer_size": 2028,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 718.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/jim/Documents/github/CS542/HW5/continuous_testing",
+					"settings":
+					{
+						"buffer_size": 1998,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1384,
+								1384
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 720.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/jim/Documents/github/CS542/HW5/Makefile",
+					"settings":
+					{
+						"buffer_size": 551,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								355,
+								355
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
