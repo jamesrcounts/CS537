@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"hw",
+				"hw7_ns"
+			],
+			[
+				"os",
+				"ostream_iterator"
+			],
+			[
+				"out",
+				"out_it"
+			],
+			[
+				"ou",
+				"out_it"
+			],
+			[
+				"for",
+				"for	For Loop"
+			],
+			[
 				"res",
 				"result_size"
 			],
@@ -220,10 +240,6 @@
 				"VerifyBoatPositionForMoveFromLeft"
 			],
 			[
-				"for",
-				"forv	Vector For Loop"
-			],
-			[
 				"Veri",
 				"VerifyMoves"
 			],
@@ -272,34 +288,37 @@
 	"buffers":
 	[
 		{
-			"file": "/home/jim/Documents/github/CS542/HW4/String.cpp",
+			"file": "/home/jim/Documents/github/CS542/HW7/words.txt",
 			"settings":
 			{
-				"buffer_size": 2604,
+				"buffer_size": 1163,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/home/jim/Documents/github/CS542/HW7/hw7.cpp",
+			"settings":
+			{
+				"buffer_size": 1032,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/jim/Documents/github/CS542/HW4/String.h",
+			"contents": "###################################\n# Makefile\n# HW 7\n# CS542 - OO - Spring 2013\n# Jim Counts\n###################################\nCC = g++\nINCLUDE = -I ../igloo\nCFLAGS = -O3 -Wall -fno-strict-overflow\nSRCS = *.cpp\nCHKFLAGS = -v --inline-suppr --enable=all\n\nall: runtest run format check\n\nclean: \n	rm -f hw7_wc hw7_ns numbersorter_test wordcounter_test even.txt odd.txt *.o *.orig *.gch\n\nrun: hw7_wc hw7_ns\n	./hw7_wc\n	./hw7_ns\n\nhw7_ns: hw7_ns.cpp NumberSorter.o\n	$(CC) $(INCLUDE) hw7_ns.cpp NumberSorter.o -o hw7_ns $(CFLAGS)\n\nhw7_wc: hw7_wc.cpp WordCounter.o \n	$(CC) $(INCLUDE) hw7_wc.cpp WordCounter.o -o hw7_wc $(CFLAGS)\n\nruntest: wordcounter_test numbersorter_test\n	./numbersorter_test\n	./wordcounter_test\n\nnumbersorter_test: numbersorter_test.cpp NumberSorter.o\n	$(CC) $(INCLUDE) numbersorter_test.cpp NumberSorter.o -o numbersorter_test $(CFLAGS)\n\nwordcounter_test: wordcounter_test.cpp WordCounter.o\n	$(CC) $(INCLUDE) wordcounter_test.cpp WordCounter.o -o wordcounter_test $(CFLAGS)\n\nNumberSorter.o: NumberSorter.h NumberSorter.cpp\n	$(CC) $(INCLUDE) -c NumberSorter.cpp $(CFLAGS)\n\nWordCounter.o: WordCounter.h WordCounter.cpp\n	$(CC) $(INCLUDE) -c WordCounter.cpp $(CFLAGS)\n\nformat:\n	astyle -YfDHUbps4yj -k3 $(SRCS)\n\ncheck: \n	cppcheck $(CHKFLAGS) $(SRCS)\n\n# DO NOT DELETE",
+			"file": "/home/jim/Documents/github/CS542/HW7/Makefile",
+			"file_size": 1276,
+			"file_write_time": 1363042932000000,
 			"settings":
 			{
-				"buffer_size": 2028,
+				"buffer_size": 1276,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/jim/Documents/github/CS542/HW5/continuous_testing",
+			"file": "/home/jim/Documents/github/CS542/HW7/even.txt",
 			"settings":
 			{
-				"buffer_size": 1998,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/jim/Documents/github/CS542/HW5/Makefile",
-			"settings":
-			{
-				"buffer_size": 551,
+				"buffer_size": 147,
 				"line_ending": "Unix"
 			}
 		}
@@ -332,7 +351,44 @@
 	},
 	"file_history":
 	[
+		"/home/jim/Documents/github/CS542/HW7/integers.txt",
+		"/home/jim/Documents/github/CS542/HW7/Makefile",
+		"/home/jim/Documents/github/CS542/HW7/wordcounter_test.cpp",
+		"/home/jim/Documents/github/CS542/HW7/WordCounter.cpp",
+		"/home/jim/Documents/github/CS542/HW7/WordCounter.h",
+		"/home/jim/Documents/github/CS542/HW7/NumberSorter.cpp",
+		"/home/jim/Documents/github/CS542/HW7/exclude.txt",
+		"/home/jim/Documents/github/CS542/HW7/copyif.h",
+		"/home/jim/Documents/github/CS542/HW7/test.cpp",
+		"/home/jim/Documents/github/CS542/HW7/numbersorter_test.cpp",
+		"/home/jim/Documents/github/CS542/HW7/NumberSorter.h",
+		"/home/jim/Documents/github/CS542/HW7/build.log",
+		"/home/jim/Documents/github/CS542/HW7/hw7.cpp",
+		"/home/jim/Downloads/7.html.txt",
+		"/home/jim/Documents/github/CS542/HW6/Array.h",
+		"/home/jim/Documents/github/CS542/HW6/matrix_test.cpp",
+		"/home/jim/Documents/github/CS542/HW6/array_test.cpp",
+		"/home/jim/Documents/github/CS542/HW6/hw6.cpp",
+		"/home/jim/Documents/github/CS542/HW6/Makefile",
+		"/home/jim/Downloads/6.html.txt",
+		"/home/jim/Documents/github/CS542/HW1/Stack/Stack.h",
+		"/home/jim/Documents/github/CS542/HW6/Matrix.h",
+		"/home/jim/Documents/github/CS542/HW6/log.txt",
+		"/home/jim/Documents/github/CS542/HW5/continuous_testing",
+		"/home/jim/Documents/github/CS542/HW5/Makefile",
+		"/home/jim/Documents/github/CS542/HW5/test.cpp",
+		"/home/jim/Documents/github/CS542/HW5/Alien.h",
+		"/home/jim/Documents/github/CS542/HW5/Alien.cpp",
 		"/home/jim/Documents/github/CS542/HW5/hw5.cpp",
+		"/home/jim/Documents/github/CS542/HW5.zip",
+		"/home/jim/Documents/github/CS542/HW5/Horse.h",
+		"/home/jim/Documents/github/CS542/HW5/Horse.cpp",
+		"/home/jim/Documents/github/CS542/HW4/String.h",
+		"/home/jim/Documents/github/CS542/HW4/String.cpp",
+		"/home/jim/Documents/github/CS542/HW5/Snake.h",
+		"/home/jim/Documents/github/CS542/HW5/Snake.cpp",
+		"/home/jim/Documents/github/CS542/HW5/Animal.cpp",
+		"/home/jim/Documents/github/CS542/HW5/Animal.h",
 		"/home/jim/Documents/github/CS542/HW4/hw4.cpp",
 		"/home/jim/Documents/github/CS542/HW3/String.cpp",
 		"/home/jim/Documents/github/CS542/HW3/test.cpp",
@@ -378,6 +434,7 @@
 		"height": 0.0,
 		"where_history":
 		[
+			"/home/jim/Documents/github/CS542/HW6"
 		]
 	},
 	"find_state":
@@ -385,6 +442,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"hw6",
+			"test.cpp",
+			"5",
 			"hw4",
 			"endif",
 			"Yfbps4",
@@ -406,6 +466,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"hw7",
+			"6",
 			"hw5",
 			"connection",
 			"client_address",
@@ -414,49 +476,99 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": false,
+		"whole_word": true,
 		"wrap": true
 	},
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/home/jim/Documents/github/CS542/HW4/String.cpp",
+					"file": "/home/jim/Documents/github/CS542/HW7/words.txt",
 					"settings":
 					{
-						"buffer_size": 2604,
+						"buffer_size": 1163,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								762,
+								762
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 760.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/home/jim/Documents/github/CS542/HW4/String.h",
+					"file": "/home/jim/Documents/github/CS542/HW7/hw7.cpp",
 					"settings":
 					{
-						"buffer_size": 2028,
+						"buffer_size": 1032,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								784,
+								784
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 261.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/jim/Documents/github/CS542/HW7/Makefile",
+					"settings":
+					{
+						"buffer_size": 1276,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								485,
+								485
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/jim/Documents/github/CS542/HW7/even.txt",
+					"settings":
+					{
+						"buffer_size": 147,
 						"regions":
 						{
 						},
@@ -469,63 +581,7 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 718.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/jim/Documents/github/CS542/HW5/continuous_testing",
-					"settings":
-					{
-						"buffer_size": 1998,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1384,
-								1384
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 720.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/jim/Documents/github/CS542/HW5/Makefile",
-					"settings":
-					{
-						"buffer_size": 551,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								355,
-								355
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
