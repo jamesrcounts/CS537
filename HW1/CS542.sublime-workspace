@@ -287,41 +287,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "/home/jim/Documents/github/CS542/HW7/words.txt",
-			"settings":
-			{
-				"buffer_size": 1163,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/home/jim/Documents/github/CS542/HW7/hw7.cpp",
-			"settings":
-			{
-				"buffer_size": 1032,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "###################################\n# Makefile\n# HW 7\n# CS542 - OO - Spring 2013\n# Jim Counts\n###################################\nCC = g++\nINCLUDE = -I ../igloo\nCFLAGS = -O3 -Wall -fno-strict-overflow\nSRCS = *.cpp\nCHKFLAGS = -v --inline-suppr --enable=all\n\nall: runtest run format check\n\nclean: \n	rm -f hw7_wc hw7_ns numbersorter_test wordcounter_test even.txt odd.txt *.o *.orig *.gch\n\nrun: hw7_wc hw7_ns\n	./hw7_wc\n	./hw7_ns\n\nhw7_ns: hw7_ns.cpp NumberSorter.o\n	$(CC) $(INCLUDE) hw7_ns.cpp NumberSorter.o -o hw7_ns $(CFLAGS)\n\nhw7_wc: hw7_wc.cpp WordCounter.o \n	$(CC) $(INCLUDE) hw7_wc.cpp WordCounter.o -o hw7_wc $(CFLAGS)\n\nruntest: wordcounter_test numbersorter_test\n	./numbersorter_test\n	./wordcounter_test\n\nnumbersorter_test: numbersorter_test.cpp NumberSorter.o\n	$(CC) $(INCLUDE) numbersorter_test.cpp NumberSorter.o -o numbersorter_test $(CFLAGS)\n\nwordcounter_test: wordcounter_test.cpp WordCounter.o\n	$(CC) $(INCLUDE) wordcounter_test.cpp WordCounter.o -o wordcounter_test $(CFLAGS)\n\nNumberSorter.o: NumberSorter.h NumberSorter.cpp\n	$(CC) $(INCLUDE) -c NumberSorter.cpp $(CFLAGS)\n\nWordCounter.o: WordCounter.h WordCounter.cpp\n	$(CC) $(INCLUDE) -c WordCounter.cpp $(CFLAGS)\n\nformat:\n	astyle -YfDHUbps4yj -k3 $(SRCS)\n\ncheck: \n	cppcheck $(CHKFLAGS) $(SRCS)\n\n# DO NOT DELETE",
-			"file": "/home/jim/Documents/github/CS542/HW7/Makefile",
-			"file_size": 1276,
-			"file_write_time": 1363042932000000,
-			"settings":
-			{
-				"buffer_size": 1276,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/jim/Documents/github/CS542/HW7/even.txt",
-			"settings":
-			{
-				"buffer_size": 147,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -351,8 +316,11 @@
 	},
 	"file_history":
 	[
-		"/home/jim/Documents/github/CS542/HW7/integers.txt",
+		"/home/jim/Documents/github/CS542/HW7/words.txt",
+		"/home/jim/Documents/github/CS542/HW7/hw7.cpp",
 		"/home/jim/Documents/github/CS542/HW7/Makefile",
+		"/home/jim/Documents/github/CS542/HW7/even.txt",
+		"/home/jim/Documents/github/CS542/HW7/integers.txt",
 		"/home/jim/Documents/github/CS542/HW7/wordcounter_test.cpp",
 		"/home/jim/Documents/github/CS542/HW7/WordCounter.cpp",
 		"/home/jim/Documents/github/CS542/HW7/WordCounter.h",
@@ -363,7 +331,6 @@
 		"/home/jim/Documents/github/CS542/HW7/numbersorter_test.cpp",
 		"/home/jim/Documents/github/CS542/HW7/NumberSorter.h",
 		"/home/jim/Documents/github/CS542/HW7/build.log",
-		"/home/jim/Documents/github/CS542/HW7/hw7.cpp",
 		"/home/jim/Downloads/7.html.txt",
 		"/home/jim/Documents/github/CS542/HW6/Array.h",
 		"/home/jim/Documents/github/CS542/HW6/matrix_test.cpp",
@@ -482,113 +449,8 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "/home/jim/Documents/github/CS542/HW7/words.txt",
-					"settings":
-					{
-						"buffer_size": 1163,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								762,
-								762
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/home/jim/Documents/github/CS542/HW7/hw7.cpp",
-					"settings":
-					{
-						"buffer_size": 1032,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								784,
-								784
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 261.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/jim/Documents/github/CS542/HW7/Makefile",
-					"settings":
-					{
-						"buffer_size": 1276,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								485,
-								485
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Makefile/Makefile.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/jim/Documents/github/CS542/HW7/even.txt",
-					"settings":
-					{
-						"buffer_size": 147,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

@@ -4,52 +4,95 @@
 
 #include <arpa/inet.h>
 #include <errno.h>
+#include <netdb.h>
 #include <netinet/in.h>
+#include <stdio.h>
 #include <string.h>
 #include <strings.h>
 #include <unistd.h>
 #include "InternetSocket.h"
+#include "TcpSocket.h"
+#include "TcpListeningSocket.h"
 
 using namespace igloo;
 using namespace std;
 
-class TcpSocket : public InternetSocket
+
+void *Ping( void *state )
 {
-public:
-    TcpSocket( string address_spec = "", uint16_t port = 1025 )
-        : InternetSocket( address_spec, port )
+    struct addrinfo hints, *res;
+    int sockfd;
+
+    memset( &hints, 0, sizeof hints );
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+
+    int addr_ok = getaddrinfo( "127.0.0.1", "3490", &hints, &res );
+
+    if ( addr_ok != 0 )
     {
-        fd = socket( AF_INET, SOCK_STREAM, 0 );
+        fprintf( stderr,
+                 "Error unable to get address info, errno = %d (%s) \n",
+                 errno,
+                 strerror( errno ) );
+    }
 
-        if ( fd < 0 )
+    sockfd = socket( res->ai_family,
+                     res->ai_socktype,
+                     res->ai_protocol );
+
+    int yes = 1;
+    int opt_ok = setsockopt( sockfd,
+                             SOL_SOCKET,
+                             SO_REUSEADDR,
+                             &yes,
+                             sizeof( int ) );
+
+    if ( opt_ok == -1 )
+    {
+        fprintf( stderr,
+                 "Error unable to set socket options, errno = %d (%s) \n",
+                 errno,
+                 strerror( errno ) );
+    }
+
+    while ( connect( sockfd, res->ai_addr, res->ai_addrlen ) == -1 )
+    {
+        fprintf( stderr,
+                 "Error unable to connect to socket, errno = %d (%s) \n",
+                 errno,
+                 strerror( errno ) );
+
+        sleep( 1 );
+    }
+
+    close( sockfd );
+    return NULL;
+}
+
+Context( DescribeAListeningSocket )
+{
+    Spec( ItCanAcceptConnections )
+    {
+        pthread_t tid;
+        pthread_create( &tid,
+                        NULL,
+                        &Ping,
+                        ( void * )NULL );
+
+
+        try
         {
-            int error = errno;
-            throw SocketException( error );
+            TcpListeningSocket t( 4,
+                                  "127.0.0.1",
+                                  3490 );
+            SocketConnection s = t.acceptConnection();
+            Assert::That( s.getDescriptor(), IsGreaterThan( -1 ) );
         }
-
-        int yes = 1;
-        int opt_ok = setsockopt( fd,
-                                 SOL_SOCKET,
-                                 SO_REUSEADDR,
-                                 &yes,
-                                 sizeof( int ) );
-
-        if ( opt_ok == -1 )
+        catch ( exception &e )
         {
-            int error = errno;
-            throw InternetSocketException( error );
+            cout << e.what() << endl;
         }
-
-        int bind_ok = bind( fd,
-                            ( struct sockaddr * )&address,
-                            sizeof( address ) );
-
-        if ( bind_ok == -1 )
-        {
-            int error = errno;
-            throw InternetSocketException( error );
-        }
-
     }
 };
 
@@ -111,11 +154,11 @@ Context( DescribeAnInternetSocket )
 
     Spec( ItThrowsOnInvalidAddresses )
     {
-        typedef InvalidAddressException iaex;
+        typedef InternetSocketException iaex;
         AssertThrows( iaex,
                       InvalidConstruction() );
         Assert::That( LastException<iaex>().what(),
-                      Equals( "Tried to create a socket with an invalid address" ) );
+                      Equals( "An unknown error occured" ) );
     }
 
 };
@@ -124,9 +167,9 @@ Context( DescribeASocketException )
 {
     Spec( ItPassesErrnoInformationAsAString )
     {
-        SocketException s( EADDRINUSE );
+        InternetSocketException s( EADDRINUSE );
         Assert::That( s.what(),
-                      Equals( "Could not create socket: Address already in use" ) );
+                      Equals( "Address already in use" ) );
     }
 };
 

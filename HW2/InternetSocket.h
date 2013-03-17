@@ -1,63 +1,68 @@
 #ifndef INTERNETSOCKET_H
 #define INTERNETSOCKET_H
 
+#include <arpa/inet.h>
+#include <errno.h>
+#include <exception>
+#include <string>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
+
 using namespace std;
 
 class InternetSocketException
     : public exception
 {
-protected:
-    string message;
+private:
+    int e;
 public:
-    InternetSocketException( int error, string prefix = "" )
+    InternetSocketException( int error ) : e( error )
     {
-        string w( prefix );
-
-        if ( error != 0 )
-        {
-            w += ": ";
-            w += strerror( error );
-        }
-
-        message = w;
     }
 
     ~InternetSocketException() throw() {};
 
     virtual const char *what() const throw()
     {
-        return message.c_str();
+        return e == 0 ? "An unknown error occured" : strerror( e );
     }
 };
 
-class InvalidAddressException
-    : public InternetSocketException
-{
-public:
-    InvalidAddressException( int error )
-        : InternetSocketException( error, "Tried to create a socket with an invalid address" )
-    {};
-};
-
-class SocketException
-    : public InternetSocketException
-{
-public:
-    SocketException( int error )
-        : InternetSocketException( error, "Could not create socket" )
-    {};
-};
-
-
 class InternetSocket
 {
-protected:
-    struct sockaddr_in address;
+private:
     int fd;
+    struct sockaddr_in address;
+protected:
+    void create( int type )
+    {
+        fd = socket( AF_INET, type, 0 );
+
+        if ( fd < 0 )
+        {
+            int error = errno;
+            throw InternetSocketException( error );
+        }
+
+        int yes = 1;
+        int opt_ok = setsockopt( fd,
+                                 SOL_SOCKET,
+                                 SO_REUSEADDR,
+                                 &yes,
+                                 sizeof( int ) );
+
+        if ( opt_ok == -1 )
+        {
+            int error = errno;
+            throw InternetSocketException( error );
+        }
+    }
 
 public:
 
-    InternetSocket( string address_spec = "", uint16_t port = 1025 ) : fd( -1 )
+    InternetSocket( string address_spec = "",
+                    uint16_t port = 1025 ) : fd( -1 )
     {
         bzero( &address, sizeof( sockaddr_in ) );
 
@@ -79,8 +84,8 @@ public:
         }
         else
         {
-            int error = errno;
-            throw InvalidAddressException( error );
+            int error = ok == -1 ? errno : 0;
+            throw InternetSocketException( error );
         }
 
         address.sin_port = htons( port );
@@ -90,6 +95,7 @@ public:
     {
         close( fd );
     }
+
 
     struct sockaddr_in getAddress()
     {

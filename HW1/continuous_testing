@@ -83,6 +83,10 @@ def get_errors_in(output)
 end
 
 def notify(build_message)
+  icon = build_message.successful ? "green" : "red"
+  message = build_message.successful ? "Build OK!" : "Build Failed."
+  args = "'Build' '#{message}' --icon=/home/jim/#{icon}.jpg"
+  `notify-send #{args}`
   puts  "#{build_message.message}"
 end
 
