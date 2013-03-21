@@ -2,6 +2,7 @@
 #define TCPSOCKET_H
 
 #include "InternetSocket.h"
+#include "SocketConnection.h"
 
 using namespace std;
 
@@ -28,6 +29,24 @@ public:
         }
     }
 
+    SocketConnection &initiateConnection()
+    {
+        struct sockaddr_in addr = getAddress();
+        int connect_ok = connect( getDescriptor(),
+                                  ( struct sockaddr * )&addr,
+                                  sizeof addr );
+
+        if ( connect_ok == -1 )
+        {
+            int error = errno;
+            throw InternetSocketException( error );
+        }
+
+        SocketConnection *t = new SocketConnection( getDescriptor(),
+                addr );
+        return *t;
+    }
+
     void makePassive( int backlog )
     {
         int listen_ok = listen( getDescriptor(), backlog );
@@ -37,7 +56,6 @@ public:
             int error = errno;
             throw InternetSocketException( error );
         }
-
     }
 };
 

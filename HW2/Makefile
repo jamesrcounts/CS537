@@ -7,15 +7,19 @@
 CC = g++
 INCLUDE = -I ../igloo
 CFLAGS = -lpthread -Wall
-SRCS = test.cpp *.h
+SRCS = *.cpp *.h
 
 all: format runtest check InternetSocket.gch SocketConnection.gch TcpListeningSocket.gch TcpSocket.gch
 
-runtest: test
+runtest: listening_test test
+	./listening_test
 	./test
-	
+
+listening_test: listening_test.cpp *.h
+	g++ $(INCLUDE) listening_test.cpp -o listening_test -g $(CFLAGS)
+
 test: test.cpp *.h
-	g++ $(INCLUDE) test.cpp -o test -g $(CFLAGS)
+	$(CC) $(INCLUDE) test.cpp -o test -g $(CFLAGS)
 
 format: 
 	astyle -YfDHUbps4yj -k3 $(SRCS)
@@ -24,7 +28,7 @@ check: format
 	cppcheck -v --inline-suppr --enable=all $(SRCS)
 
 clean:
-	rm -f test *.orig *.gch
+	rm -f listening_test test *.orig *.gch
 
 InternetSocket.gch: InternetSocket.h
 	$(CC) -c InternetSocket.h $(CFLAGS)
