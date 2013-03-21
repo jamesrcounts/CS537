@@ -87,13 +87,14 @@ def notify(build_message)
   message = build_message.successful ? "Build OK!" : "Build Failed."
   args = "'Build' '#{message}' --icon=/home/jim/#{icon}.jpg"
   `notify-send #{args}`
-  puts  "#{build_message.message}"
 end
 
 def monitor
   if changes_have_occured
-    errors = get_errors_in(`make 2>&1`)
+    out = `make 2>&1`;
+    errors = get_errors_in(out)
     notify(BuildMessage.new(errors))
+    puts "#{out}"
   end
 end
 

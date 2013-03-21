@@ -17,58 +17,8 @@
 using namespace igloo;
 using namespace std;
 
-
-void *Ping( void *state )
-{
-    struct addrinfo hints, *res;
-    int sockfd;
-
-    memset( &hints, 0, sizeof hints );
-    hints.ai_family = AF_UNSPEC;
-    hints.ai_socktype = SOCK_STREAM;
-
-    int addr_ok = getaddrinfo( "127.0.0.1", "3490", &hints, &res );
-
-    if ( addr_ok != 0 )
-    {
-        fprintf( stderr,
-                 "Error unable to get address info, errno = %d (%s) \n",
-                 errno,
-                 strerror( errno ) );
-    }
-
-    sockfd = socket( res->ai_family,
-                     res->ai_socktype,
-                     res->ai_protocol );
-
-    int yes = 1;
-    int opt_ok = setsockopt( sockfd,
-                             SOL_SOCKET,
-                             SO_REUSEADDR,
-                             &yes,
-                             sizeof( int ) );
-
-    if ( opt_ok == -1 )
-    {
-        fprintf( stderr,
-                 "Error unable to set socket options, errno = %d (%s) \n",
-                 errno,
-                 strerror( errno ) );
-    }
-
-    while ( connect( sockfd, res->ai_addr, res->ai_addrlen ) == -1 )
-    {
-        fprintf( stderr,
-                 "Error unable to connect to socket, errno = %d (%s) \n",
-                 errno,
-                 strerror( errno ) );
-
-        sleep( 1 );
-    }
-
-    close( sockfd );
-    return NULL;
-}
+void *ping( void *state );
+void InvalidConstruction();
 
 Context( DescribeAListeningSocket )
 {
@@ -77,7 +27,7 @@ Context( DescribeAListeningSocket )
         pthread_t tid;
         pthread_create( &tid,
                         NULL,
-                        &Ping,
+                        &ping,
                         ( void * )NULL );
 
 
@@ -95,11 +45,6 @@ Context( DescribeAListeningSocket )
         }
     }
 };
-
-void InvalidConstruction()
-{
-    TcpSocket s( "512.512.512.512" );
-}
 
 Context( DescribeAnInternetSocket )
 {
@@ -172,6 +117,33 @@ Context( DescribeASocketException )
                       Equals( "Address already in use" ) );
     }
 };
+
+void InvalidConstruction()
+{
+    TcpSocket s( "512.512.512.512" );
+}
+
+void *ping( void *state )
+{
+    TcpSocket ts( "127.0.0.1", 3490 );
+
+    while ( 1 )
+    {
+        try
+        {
+            SocketConnection sc = ts.initiateConnection();
+            break;
+        }
+        catch ( exception &e )
+        {
+            cout << e.what() << endl;
+        }
+
+        sleep( 1 );
+    }
+
+    return NULL;
+}
 
 int main( int argc, char const *argv[] )
 {
