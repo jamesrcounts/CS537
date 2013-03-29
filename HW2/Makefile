@@ -9,10 +9,7 @@ INCLUDE = -I ../igloo
 CFLAGS = -lpthread -Wall
 SRCS = *.cpp *.h
 
-all: format runtest check httpServer InternetSocket.gch SocketConnection.gch TcpListeningSocket.gch TcpSocket.gch
-
-httpServer: httpServer.cpp
-	$(CC) httpServer.cpp -o httpServer -g $(CFLAGS)
+all: format runtest check InternetSocket.gch SocketConnection.gch TcpListeningSocket.gch TcpSocket.gch
 
 runtest: listening_test test
 	./listening_test
