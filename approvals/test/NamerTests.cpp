@@ -6,33 +6,55 @@ using namespace std;
 
 Context( DescribeANamer )
 {
-    Spec( ItProvidesTheApprovedFilename )
+    Context( Normalization )
     {
-        Assert::That( n->getApprovedFile( "png" ),
-                      Equals( "/tmp/foo.cpp.approved.png" ) );
-    }
+        Spec( ItCleansInput )
+        {
+            Assert::That( n->getApprovedFile( ".txt" ),
+                          Equals( "/tmp/foo.cpp.approved.txt" ) );
+        }
 
-    Spec( ItProvidesTheReceivedFilename )
+        void SetUp()
+        {
+            n = new Namer( "/tmp/", "foo.cpp." );
+        }
+        void TearDown()
+        {
+            delete n;
+        }
+
+        Namer *n;
+    };
+    Context( BasicFunctionality )
     {
-        Assert::That( n->getReceivedFile( "txt" ),
-                      Equals( "/tmp/foo.cpp.received.txt" ) );
-    }
+        Spec( ItProvidesTheApprovedFilename )
+        {
+            Assert::That( n->getApprovedFile( "png" ),
+                          Equals( "/tmp/foo.cpp.approved.png" ) );
+        }
 
-    void SetUp()
-    {
-        path = string( "/tmp" );
-        name = string( "foo.cpp" );
-        n = new Namer( path, name );
-    }
+        Spec( ItProvidesTheReceivedFilename )
+        {
+            Assert::That( n->getReceivedFile( "txt" ),
+                          Equals( "/tmp/foo.cpp.received.txt" ) );
+        }
 
-    void TearDown()
-    {
-        delete n;
-    }
+        void SetUp()
+        {
+            path = string( "/tmp" );
+            name = string( "foo.cpp" );
+            n = new Namer( path, name );
+        }
 
-    string name;
-    string path;
-    Namer *n;
+        void TearDown()
+        {
+            delete n;
+        }
+
+        string name;
+        string path;
+        Namer *n;
+    };
 };
 
 int main( int argc, char const *argv[] )
