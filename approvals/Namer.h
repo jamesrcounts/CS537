@@ -2,7 +2,6 @@
 #define NAMER_H
 
 #include <string>
-#include <iostream>
 
 class Namer
 {

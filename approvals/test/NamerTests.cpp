@@ -14,10 +14,13 @@ Context( DescribeANamer )
                           Equals( "/tmp/foo.cpp.approved.txt" ) );
         }
 
+        // cppcheck-suppress unusedFunction
         void SetUp()
         {
             n = new Namer( "/tmp/", "foo.cpp." );
         }
+
+        // cppcheck-suppress unusedFunction
         void TearDown()
         {
             delete n;
@@ -25,6 +28,7 @@ Context( DescribeANamer )
 
         Namer *n;
     };
+
     Context( BasicFunctionality )
     {
         Spec( ItProvidesTheApprovedFilename )
