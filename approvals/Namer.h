@@ -2,6 +2,9 @@
 #define NAMER_H
 
 #include <string>
+#include <boost/filesystem.hpp>
+
+using namespace boost::filesystem;
 
 class Namer
 {
@@ -11,13 +14,12 @@ private:
 
     std::string createPath( std::string fileExtension, std::string fileType )
     {
-        return approvalPath +
-               "/" +
-               fileName +
-               "." +
-               fileType +
-               "." +
-               eraseFirst( fileExtension, '.' );
+        std::string name( fileName +
+                          "." + fileType +
+                          "." + eraseFirst( fileExtension, '.' ) );
+        boost::filesystem::path p( approvalPath );
+        p /= name;
+        return p.string();
     }
 
     std::string eraseFirst( std::string s, char c )
@@ -45,11 +47,6 @@ private:
         return s;
     }
 
-    std::string pathClean( std::string path )
-    {
-        return	eraseLast( path, '/' );
-    }
-
     std::string nameClean( std::string name )
     {
         return eraseLast( name, '.' );
@@ -57,7 +54,7 @@ private:
 
 public:
     Namer( std::string path, std::string name )
-        : approvalPath( pathClean( path ) ), fileName( nameClean( name ) ) {}
+        : approvalPath( path ), fileName( nameClean( name ) ) {}
 
     std::string getApprovedFile( std::string fileExtension )
     {
