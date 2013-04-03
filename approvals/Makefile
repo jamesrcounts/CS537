@@ -46,6 +46,6 @@ check: format
 	cppcheck -v --inline-suppr --suppress=unmatchedSuppression --enable=all $(SRCS)
 
 clean:
-	rm -f ./test/bin/*
+	rm -f ./test/bin/*Tests
 
 # DO NOT DELETE
