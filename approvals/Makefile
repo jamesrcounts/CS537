@@ -9,10 +9,11 @@ SRCS = test/*.cpp *.h test/reporters/*.cpp reporters/*.h
 
 all: format runtest check 
 
-runtest: NamerTests StringWriterTests MeldReporterTests
+runtest: NamerTests StringWriterTests ReporterTests FileApproverTests
 	./test/bin/NamerTests
 	./test/bin/StringWriterTests
-	./test/bin/MeldReporterTests
+	./test/bin/ReporterTests
+	./test/bin/FileApproverTests
 
 NamerTests: test/NamerTests.cpp Namer.gch
 	g++ $(INCLUDE) $(LINK) test/NamerTests.cpp -o test/bin/NamerTests -g $(CFLAGS)
@@ -20,8 +21,11 @@ NamerTests: test/NamerTests.cpp Namer.gch
 StringWriterTests: test/StringWriterTests.cpp StringWriter.gch
 	g++ $(INCLUDE) $(LINK) test/StringWriterTests.cpp -o test/bin/StringWriterTests -g $(CFLAGS)
 
-MeldReporterTests: test/reporters/MeldReporterTests.cpp Reporter.gch
-	g++ $(INCLUDE) $(LINK) test/reporters/MeldReporterTests.cpp -o test/bin/MeldReporterTests -g $(CFLAGS)
+ReporterTests: test/reporters/ReporterTests.cpp Reporter.gch
+	g++ $(INCLUDE) $(LINK) test/reporters/ReporterTests.cpp -o test/bin/ReporterTests -g $(CFLAGS)
+
+FileApproverTests: test/FileApproverTests.cpp Reporter.gch
+	g++ $(INCLUDE) $(LINK) test/FileApproverTests.cpp -o test/bin/FileApproverTests -g $(CFLAGS)
 
 CommandLauncher.gch: reporters/CommandLauncher.h
 	g++ -c reporters/CommandLauncher.h -O3 -Wall
