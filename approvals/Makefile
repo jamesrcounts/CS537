@@ -5,7 +5,7 @@ CC = g++
 INCLUDE = -I ../igloo -I ~/lib/boost/include
 LINK = -L ~/lib/boost/lib
 CFLAGS = -lpthread -lboost_system -lboost_filesystem -Wall -static
-SRCS = test/*.cpp *.h test/reporters/*.cpp
+SRCS = test/*.cpp *.h test/reporters/*.cpp reporters/*.h
 
 all: format runtest check 
 
@@ -20,9 +20,15 @@ NamerTests: test/NamerTests.cpp Namer.gch
 StringWriterTests: test/StringWriterTests.cpp StringWriter.gch
 	g++ $(INCLUDE) $(LINK) test/StringWriterTests.cpp -o test/bin/StringWriterTests -g $(CFLAGS)
 
-MeldReporterTests: test/reporters/MeldReporterTests.cpp
+MeldReporterTests: test/reporters/MeldReporterTests.cpp Reporter.gch
 	g++ $(INCLUDE) $(LINK) test/reporters/MeldReporterTests.cpp -o test/bin/MeldReporterTests -g $(CFLAGS)
-	
+
+CommandLauncher.gch: reporters/CommandLauncher.h
+	g++ -c reporters/CommandLauncher.h -O3 -Wall
+
+Reporter.gch: reporters/Reporter.h CommandLauncher.gch
+	g++ -c reporters/Reporter.h -O3 -Wall
+
 Namer.gch: Namer.h
 	g++ $(INCLUDE) $(LINK) -c Namer.h -O3 -Wall -lboost_system -static
 
