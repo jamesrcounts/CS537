@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include "../ApprovalException.h"
 #include "../FileApprover.h"
-#include "../Namer.h"
 #include "../StringWriter.h"
 #include "../reporters/Reporter.h"
 

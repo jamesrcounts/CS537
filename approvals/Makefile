@@ -22,7 +22,7 @@ ApprovalExceptionTests: test/ApprovalExceptionTests.cpp ApprovalException.h
 	$(CHECK) --suppress=unmatchedSuppression test/ApprovalExceptionTests.cpp
 	g++ $(INCLUDE) $(LINK) test/ApprovalExceptionTests.cpp -o test/bin/ApprovalExceptionTests -g $(CFLAGS)
 
-NamerTests: test/NamerTests.cpp Namer.h
+NamerTests: test/NamerTests.cpp Namer.h IglooNamerFactory.h
 	$(FORMAT) test/NamerTests.cpp
 	$(CHECK) --suppress=unmatchedSuppression test/NamerTests.cpp
 	g++ $(INCLUDE) $(LINK) test/NamerTests.cpp -o test/bin/NamerTests -g $(CFLAGS)
@@ -66,10 +66,15 @@ Reporter.h: reporters/Reporter.h reporters/CommandLauncher.h
 	$(CHECK) reporters/Reporter.h
 	g++ -c reporters/Reporter.h -O3 -Wall
 
-Namer.h:
-	$(FORMAT) Namer.h
-	$(CHECK) Namer.h
-	g++ $(INCLUDE) $(LINK) -c Namer.h -O3 -Wall -lboost_system -static
+Namer.h: namers/Namer.h
+	$(FORMAT) namers/Namer.h
+	$(CHECK) namers/Namer.h
+	g++ $(INCLUDE) $(LINK) -c namers/Namer.h -O3 -Wall -lboost_system -static
+
+IglooNamerFactory.h: namers/IglooNamerFactory.h Namer.h
+	$(FORMAT) namers/IglooNamerFactory.h
+	$(CHECK) namers/IglooNamerFactory.h
+	$(CC) $(INCLUDE) $(LINK) -c namers/IglooNamerFactory.h -O3 -Wall -lboost_system -static
 
 StringWriter.h:
 	$(FORMAT) StringWriter.h

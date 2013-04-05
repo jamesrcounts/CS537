@@ -4,7 +4,7 @@
 #include <fstream>
 #include <sys/stat.h>
 #include "ApprovalException.h"
-#include "Namer.h"
+#include "namers/Namer.h"
 #include "StringWriter.h"
 #include "reporters/Reporter.h"
 
