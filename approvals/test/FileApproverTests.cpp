@@ -50,8 +50,8 @@ Context( DescribeAFileApprover )
         AssertThat( LastException<ApprovalException>().what(),
                     Equals( expected ) );
 
-        remove( approved );
-        remove( received );
+        remove( approved.c_str() );
+        remove( received.c_str() );
     }
 
     Spec( ItVerifiesFilesHaveEqualSize )
@@ -77,8 +77,8 @@ Context( DescribeAFileApprover )
         AssertThat( LastException<ApprovalException>().what(),
                     Equals( expected ) );
 
-        remove( approved );
-        remove( received );
+        remove( approved.c_str() );
+        remove( received.c_str() );
     }
 
     Spec( ItVerifiesEveryByteIsEqual )
@@ -104,8 +104,8 @@ Context( DescribeAFileApprover )
         AssertThat( LastException<ApprovalException>().what(),
                     Equals( expected ) );
 
-        remove( approved );
-        remove( received );
+        remove( approved.c_str() );
+        remove( received.c_str() );
     }
 
     Spec( ItLaunchesReporterOnFailure )
@@ -124,8 +124,8 @@ Context( DescribeAFileApprover )
         AssertThat( reporter.launcher.receivedCommand(),
                     Equals( expected ) );
 
-        remove( approved );
-        remove( received );
+        remove( approved.c_str() );
+        remove( received.c_str() );
     }
 
     Spec( ItApprovesMatchingFiles )
@@ -143,8 +143,8 @@ Context( DescribeAFileApprover )
         AssertThat( reporter.launcher.receivedCommand(),
                     Equals( expected ) );
 
-        remove( approved );
-        remove( received );
+        remove( approved.c_str() );
+        remove( received.c_str() );
     }
 
     Spec( ItCanTellYouThatAFileExists )
@@ -159,7 +159,7 @@ Context( DescribeAFileApprover )
         bool stat_ok = ( stat( approved.c_str(), &statbuf ) != -1 );
 
         Assert::That( exists, Equals( stat_ok ) );
-        remove( approved );
+        remove( approved.c_str() );
     }
 
     Spec( ItCanTellYouTheFileSize )
@@ -174,7 +174,7 @@ Context( DescribeAFileApprover )
         bool stat_ok = ( stat( approved.c_str(), &statbuf ) != -1 );
         AssertThat( stat_ok, Equals( true ) );
         AssertThat( size, Equals( ( int )statbuf.st_size ) );
-        remove( approved );
+        remove( approved.c_str() );
     }
 
     Spec( ItRemovesReceivedFileOnApproval )
@@ -191,7 +191,7 @@ Context( DescribeAFileApprover )
         Assert::That( FileApprover::fileExists( received ),
                       Equals( false ) );
 
-        remove( approved );
+        remove( approved.c_str() );
     }
 
     Spec( ItPreservesApproveFileOnApproval )
@@ -208,7 +208,7 @@ Context( DescribeAFileApprover )
         Assert::That( FileApprover::fileExists( approved ),
                       Equals( true ) );
 
-        remove( approved );
+        remove( approved.c_str() );
     }
 };
 

@@ -2,13 +2,15 @@
 #define IGLOONAMERFACTORY_H
 
 #include <string>
+#include <strings.h>
 #include <igloo/igloo.h>
+#include <unistd.h>
 #include "Namer.h"
 
 class IglooNamerFactory
 {
 private:
-    Namer *c;
+    static Namer *namer;
     static std::string currentContext;
     static std::string currentSpec;
 
@@ -33,18 +35,10 @@ private:
         return name;
     }
 
-public:
-    IglooNamerFactory() : c( NULL )
-    {
-    }
+    IglooNamerFactory() {}
 
-    ~IglooNamerFactory()
-    {
-        if ( c != NULL )
-        {
-            delete c;
-        }
-    }
+    ~IglooNamerFactory() {}
+public:
 
     static std::string ContextName()
     {
@@ -94,18 +88,19 @@ public:
         return exe;
     }
 
-    Namer &GetCurrentNamer()
+    static Namer &GetCurrentNamer()
     {
-        if ( c != NULL )
+        if ( namer != NULL )
         {
-            delete c;
+            delete namer;
         }
 
-        c = new Namer( TestDirectory(), FullTestName() );
-        return *c;
+        namer = new Namer( TestDirectory(), FullTestName() );
+        return *namer;
     }
 };
 
+Namer *IglooNamerFactory::namer;
 std::string IglooNamerFactory::currentContext;
 std::string IglooNamerFactory::currentSpec;
 

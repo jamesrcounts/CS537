@@ -2,45 +2,50 @@
 # Makefile
 ###################################
 CC = g++
-INCLUDE = -I ../igloo -I ~/lib/boost/include
-LINK = -L ~/lib/boost/lib
-CFLAGS = -lpthread -lboost_system -lboost_filesystem -Wall -static
+INCLUDE = -I ../igloo 
+CFLAGS = -lpthread -Wall 
 CHECK = cppcheck -v --inline-suppr --enable=all
 FORMAT = astyle -YfDHUbps4yj -k3 
 
 all: runtest 
 
-runtest: NamerTests StringWriterTests ReporterTests FileApproverTests ApprovalExceptionTests
+runtest: NamerTests StringWriterTests ReporterTests FileApproverTests ApprovalExceptionTests ApprovalsTests
 	./test/bin/NamerTests
 	./test/bin/StringWriterTests
 	./test/bin/ReporterTests
 	./test/bin/FileApproverTests
 	./test/bin/ApprovalExceptionTests
+	./test/bin/ApprovalsTests
 
 ApprovalExceptionTests: test/ApprovalExceptionTests.cpp ApprovalException.h
 	$(FORMAT) test/ApprovalExceptionTests.cpp
-	$(CHECK) --suppress=unmatchedSuppression test/ApprovalExceptionTests.cpp
-	g++ $(INCLUDE) $(LINK) test/ApprovalExceptionTests.cpp -o test/bin/ApprovalExceptionTests -g $(CFLAGS)
+	$(CHECK) test/ApprovalExceptionTests.cpp
+	g++ $(INCLUDE) test/ApprovalExceptionTests.cpp -o test/bin/ApprovalExceptionTests -g $(CFLAGS)
+
+ApprovalsTests: test/ApprovalsTests.cpp 
+	$(FORMAT) test/ApprovalsTests.cpp
+	$(CHECK) test/ApprovalsTests.cpp
+	g++ $(INCLUDE) test/ApprovalsTests.cpp -o test/bin/ApprovalsTests -g $(CFLAGS)
 
 NamerTests: test/NamerTests.cpp Namer.h IglooNamerFactory.h
 	$(FORMAT) test/NamerTests.cpp
 	$(CHECK) --suppress=unmatchedSuppression test/NamerTests.cpp
-	g++ $(INCLUDE) $(LINK) test/NamerTests.cpp -o test/bin/NamerTests -g $(CFLAGS)
+	g++ $(INCLUDE) test/NamerTests.cpp -o test/bin/NamerTests -g $(CFLAGS)
 
 StringWriterTests: test/StringWriterTests.cpp StringWriter.h
 	$(FORMAT) test/StringWriterTests.cpp
 	$(CHECK) test/StringWriterTests.cpp
-	g++ $(INCLUDE) $(LINK) test/StringWriterTests.cpp -o test/bin/StringWriterTests -g $(CFLAGS)
+	g++ $(INCLUDE) test/StringWriterTests.cpp -o test/bin/StringWriterTests -g $(CFLAGS)
 
 ReporterTests: test/reporters/ReporterTests.cpp reporters/Reporter.h
 	$(FORMAT) test/reporters/ReporterTests.cpp
 	$(CHECK) test/reporters/ReporterTests.cpp
-	g++ $(INCLUDE) $(LINK) test/reporters/ReporterTests.cpp -o test/bin/ReporterTests -g $(CFLAGS)
+	g++ $(INCLUDE) test/reporters/ReporterTests.cpp -o test/bin/ReporterTests -g $(CFLAGS)
 
 FileApproverTests: test/FileApproverTests.cpp reporters/Reporter.h FileApprover.h
 	$(FORMAT) test/FileApproverTests.cpp
 	$(CHECK) test/FileApproverTests.cpp
-	g++ $(INCLUDE) $(LINK) test/FileApproverTests.cpp -o test/bin/FileApproverTests -g $(CFLAGS)
+	g++ $(INCLUDE) test/FileApproverTests.cpp -o test/bin/FileApproverTests -g $(CFLAGS)
 
 ApprovalException.h: ApprovalException.gch
 
@@ -69,12 +74,12 @@ Reporter.h: reporters/Reporter.h reporters/CommandLauncher.h
 Namer.h: namers/Namer.h
 	$(FORMAT) namers/Namer.h
 	$(CHECK) namers/Namer.h
-	g++ $(INCLUDE) $(LINK) -c namers/Namer.h -O3 -Wall -lboost_system -static
+	g++ $(INCLUDE) -c namers/Namer.h -O3 -Wall
 
 IglooNamerFactory.h: namers/IglooNamerFactory.h Namer.h
 	$(FORMAT) namers/IglooNamerFactory.h
-	$(CHECK) namers/IglooNamerFactory.h
-	$(CC) $(INCLUDE) $(LINK) -c namers/IglooNamerFactory.h -O3 -Wall -lboost_system -static
+	$(CHECK) --suppress=unmatchedSuppression namers/IglooNamerFactory.h
+	$(CC) $(INCLUDE) -c namers/IglooNamerFactory.h -O3 -Wall
 
 StringWriter.h:
 	$(FORMAT) StringWriter.h

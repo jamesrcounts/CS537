@@ -52,8 +52,7 @@ Context( DescribeAnIglooNamerFactory )
                  ".ItIncludesFileContextAndSpecNames" <<
                  ".approved.txt";
 
-        IglooNamerFactory in;
-        Namer n = in.GetCurrentNamer();
+        Namer n = IglooNamerFactory::GetCurrentNamer();
         Assert::That( n.getApprovedFile( ".txt" ), Equals( expected.str() ) );
     }
 };

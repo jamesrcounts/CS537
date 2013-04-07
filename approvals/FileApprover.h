@@ -52,7 +52,7 @@ protected:
             }
         }
 
-        remove( receivedPath );
+        remove( receivedPath.c_str() );
         return NULL;
     }
 
