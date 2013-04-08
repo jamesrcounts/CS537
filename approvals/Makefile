@@ -98,6 +98,6 @@ check: format
 	cppcheck -v --inline-suppr --suppress=unmatchedSuppression --enable=all $(SRCS)
 
 clean:
-	rm -f ./test/bin/*Tests
+	rm -f *.gch *.orig ./test/*.orig ./test/bin/*Tests namers/*.gch namers/*.orig reporters/*.gch reporters/*.orig
 
 # DO NOT DELETE

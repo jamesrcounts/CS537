@@ -14,17 +14,17 @@ protected:
     FileApprover() {};
     ~FileApprover() {};
 
-    static ApprovalException *verify( std::string receivedPath,
+    static ApprovalException *Verify( std::string receivedPath,
                                       std::string approvedPath )
     {
-        int asize = fileSize( approvedPath );
+        int asize = FileSize( approvedPath );
 
         if ( -1 == asize )
         {
             return new ApprovalMissingException( receivedPath, approvedPath );
         }
 
-        int rsize = fileSize( receivedPath );
+        int rsize = FileSize( receivedPath );
 
         if ( -1 == rsize )
         {
@@ -57,12 +57,12 @@ protected:
     }
 
 public:
-    static bool fileExists( std::string path )
+    static bool FileExists( std::string path )
     {
-        return fileSize( path ) != -1;
+        return FileSize( path ) != -1;
     }
 
-    static int fileSize( std::string path )
+    static int FileSize( std::string path )
     {
         struct stat statbuf;
         int stat_ok = stat( path.c_str(), &statbuf );
@@ -75,16 +75,16 @@ public:
         return int( statbuf.st_size );
     }
 
-    static void verify( Namer n, StringWriter s, Reporter r )
+    static void Verify( Namer n, StringWriter s, Reporter r )
     {
-        std::string approvedPath = n.getApprovedFile( ".txt" );
-        std::string receivedPath = n.getReceivedFile( ".txt" );
-        s.write( receivedPath );
-        ApprovalException *ae = verify( receivedPath, approvedPath );
+        std::string approvedPath = n.GetApprovedFile( ".txt" );
+        std::string receivedPath = n.GetReceivedFile( ".txt" );
+        s.Write( receivedPath );
+        ApprovalException *ae = Verify( receivedPath, approvedPath );
 
         if ( ae != NULL )
         {
-            r.report( receivedPath, approvedPath );
+            r.Report( receivedPath, approvedPath );
             ApprovalException e( *ae );
             delete ae;
             throw e;

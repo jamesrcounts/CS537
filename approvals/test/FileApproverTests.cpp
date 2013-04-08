@@ -38,15 +38,15 @@ Context( DescribeAFileApprover )
         StringWriter writer( "Hello" );
         TestReporter reporter;
 
-        string approved = namer.getApprovedFile( ".txt" );
-        string received = namer.getReceivedFile( ".txt" );
+        string approved = namer.GetApprovedFile( ".txt" );
+        string received = namer.GetReceivedFile( ".txt" );
 
         string expected =  "Failed Approval: Approval File \"" +
                            approved +
                            "\" Not Found.";
 
         AssertThrows( ApprovalException,
-                      FileApprover::verify( namer, writer, reporter ) );
+                      FileApprover::Verify( namer, writer, reporter ) );
         AssertThat( LastException<ApprovalException>().what(),
                     Equals( expected ) );
 
@@ -61,8 +61,8 @@ Context( DescribeAFileApprover )
         StringWriter writer( "Hello" );
         TestReporter reporter;
 
-        string approved = namer.getApprovedFile( ".txt" );
-        string received = namer.getReceivedFile( ".txt" );
+        string approved = namer.GetApprovedFile( ".txt" );
+        string received = namer.GetReceivedFile( ".txt" );
 
         writeMessageTo( "Hello World", approved );
 
@@ -73,7 +73,7 @@ Context( DescribeAFileApprover )
                            ".";
 
         AssertThrows( ApprovalException,
-                      FileApprover::verify( namer, writer, reporter ) );
+                      FileApprover::Verify( namer, writer, reporter ) );
         AssertThat( LastException<ApprovalException>().what(),
                     Equals( expected ) );
 
@@ -88,8 +88,8 @@ Context( DescribeAFileApprover )
         StringWriter writer( "Hello" );
         TestReporter reporter;
 
-        string approved = namer.getApprovedFile( ".txt" );
-        string received = namer.getReceivedFile( ".txt" );
+        string approved = namer.GetApprovedFile( ".txt" );
+        string received = namer.GetReceivedFile( ".txt" );
 
         writeMessageTo( "olleH", approved );
 
@@ -100,7 +100,7 @@ Context( DescribeAFileApprover )
                            ".";
 
         AssertThrows( ApprovalException,
-                      FileApprover::verify( namer, writer, reporter ) );
+                      FileApprover::Verify( namer, writer, reporter ) );
         AssertThat( LastException<ApprovalException>().what(),
                     Equals( expected ) );
 
@@ -112,16 +112,16 @@ Context( DescribeAFileApprover )
     {
         Namer namer( bin(),
                      "DescribeAFileApprover.ItLaunchesReporterOnFailure" );
-        string approved = namer.getApprovedFile( ".txt" );
-        string received = namer.getReceivedFile( ".txt" );
+        string approved = namer.GetApprovedFile( ".txt" );
+        string received = namer.GetReceivedFile( ".txt" );
         writeMessageTo( "olleH", approved );
         StringWriter writer( "Hello" );
         TestReporter reporter;
 
         string expected = "fake " + received + " " + approved + " ";
         AssertThrows( ApprovalException,
-                      FileApprover::verify( namer, writer, reporter ) );
-        AssertThat( reporter.launcher.receivedCommand(),
+                      FileApprover::Verify( namer, writer, reporter ) );
+        AssertThat( reporter.launcher.ReceivedCommand(),
                     Equals( expected ) );
 
         remove( approved.c_str() );
@@ -132,15 +132,15 @@ Context( DescribeAFileApprover )
     {
         Namer namer( bin(),
                      "DescribeAFileApprover.ItApprovesMatchingFiles" );
-        string approved = namer.getApprovedFile( ".txt" );
-        string received = namer.getReceivedFile( ".txt" );
+        string approved = namer.GetApprovedFile( ".txt" );
+        string received = namer.GetReceivedFile( ".txt" );
         writeMessageTo( "Hello", approved );
         StringWriter writer( "Hello" );
         TestReporter reporter;
 
         string expected = "";
-        FileApprover::verify( namer, writer, reporter );
-        AssertThat( reporter.launcher.receivedCommand(),
+        FileApprover::Verify( namer, writer, reporter );
+        AssertThat( reporter.launcher.ReceivedCommand(),
                     Equals( expected ) );
 
         remove( approved.c_str() );
@@ -151,9 +151,9 @@ Context( DescribeAFileApprover )
     {
         Namer namer( bin(),
                      "DescribeAFileApprover.ItCanTellYouThatAFileExists" );
-        string approved = namer.getApprovedFile( ".txt" );
+        string approved = namer.GetApprovedFile( ".txt" );
         writeMessageTo( "Hello", approved );
-        bool exists = FileApprover::fileExists( approved );
+        bool exists = FileApprover::FileExists( approved );
 
         struct stat statbuf;
         bool stat_ok = ( stat( approved.c_str(), &statbuf ) != -1 );
@@ -166,9 +166,9 @@ Context( DescribeAFileApprover )
     {
         Namer namer( bin(),
                      "DescribeAFileApprover.ItCanTellYouTheFileSize" );
-        string approved = namer.getApprovedFile( ".txt" );
+        string approved = namer.GetApprovedFile( ".txt" );
         writeMessageTo( "Hello", approved );
-        int size = FileApprover::fileSize( approved );
+        int size = FileApprover::FileSize( approved );
 
         struct stat statbuf;
         bool stat_ok = ( stat( approved.c_str(), &statbuf ) != -1 );
@@ -181,14 +181,14 @@ Context( DescribeAFileApprover )
     {
         Namer namer( bin(),
                      "DescribeAFileApprover.ItRemovesReceivedFileOnApproval" );
-        string approved = namer.getApprovedFile( ".txt" );
-        string received = namer.getReceivedFile( ".txt" );
+        string approved = namer.GetApprovedFile( ".txt" );
+        string received = namer.GetReceivedFile( ".txt" );
         writeMessageTo( "Hello", approved );
         StringWriter writer( "Hello" );
         TestReporter reporter;
 
-        FileApprover::verify( namer, writer, reporter );
-        Assert::That( FileApprover::fileExists( received ),
+        FileApprover::Verify( namer, writer, reporter );
+        Assert::That( FileApprover::FileExists( received ),
                       Equals( false ) );
 
         remove( approved.c_str() );
@@ -198,14 +198,14 @@ Context( DescribeAFileApprover )
     {
         Namer namer( bin(),
                      "DescribeAFileApprover.ItPreservesApproveFileOnApproval" );
-        string approved = namer.getApprovedFile( ".txt" );
-        string received = namer.getReceivedFile( ".txt" );
+        string approved = namer.GetApprovedFile( ".txt" );
+        string received = namer.GetReceivedFile( ".txt" );
         writeMessageTo( "Hello", approved );
         StringWriter writer( "Hello" );
         TestReporter reporter;
 
-        FileApprover::verify( namer, writer, reporter );
-        Assert::That( FileApprover::fileExists( approved ),
+        FileApprover::Verify( namer, writer, reporter );
+        Assert::That( FileApprover::FileExists( approved ),
                       Equals( true ) );
 
         remove( approved.c_str() );

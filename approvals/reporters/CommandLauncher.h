@@ -12,7 +12,7 @@ class CommandLauncher
 {
 public:
     virtual ~CommandLauncher() {}
-    virtual void launch( std::vector<std::string> argv ) = 0;
+    virtual void Launch( std::vector<std::string> argv ) = 0;
 };
 
 class DoNothingLauncher : public CommandLauncher
@@ -20,7 +20,7 @@ class DoNothingLauncher : public CommandLauncher
 private:
     std::string cmd;
 public:
-    void launch( std::vector<std::string> argv )
+    void Launch( std::vector<std::string> argv )
     {
         for ( std::vector<std::string>::iterator it = argv.begin();
                 it != argv.end();
@@ -31,7 +31,7 @@ public:
         }
     }
 
-    std::string receivedCommand()
+    std::string ReceivedCommand()
     {
         return cmd;
     }
@@ -40,7 +40,7 @@ public:
 class SystemLauncher : public CommandLauncher
 {
 public:
-    void launch( std::vector<std::string> argv )
+    void Launch( std::vector<std::string> argv )
     {
         char *ARGV[argv.size() + 1];
         int count = 0;

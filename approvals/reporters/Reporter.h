@@ -16,13 +16,13 @@ protected:
     }
 
 public:
-    void report( std::string received, std::string approved )
+    void Report( std::string received, std::string approved )
     {
         std::vector<std::string> fullCommand;
         fullCommand.push_back( cmd );
         fullCommand.push_back( received );
         fullCommand.push_back( approved );
-        l->launch( fullCommand );
+        l->Launch( fullCommand );
     }
 };
 

@@ -14,19 +14,19 @@ public:
     StringWriter( std::string contents, std::string fileExtension = "txt" )
         : s( contents ), ext( fileExtension ) {}
 
-    std::string getFileExtension()
+    std::string GetFileExtension()
     {
         return ext;
     }
 
-    void write( std::string path )
+    void Write( std::string path )
     {
         std::ofstream out( path.c_str(), std::ofstream::out );
-        this->write( out );
+        this->Write( out );
         out.close();
     }
 
-    void write( std::ostream &out )
+    void Write( std::ostream &out )
     {
         out << s;
     }

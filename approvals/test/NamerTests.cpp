@@ -53,7 +53,7 @@ Context( DescribeAnIglooNamerFactory )
                  ".approved.txt";
 
         Namer n = IglooNamerFactory::GetCurrentNamer();
-        Assert::That( n.getApprovedFile( ".txt" ), Equals( expected.str() ) );
+        Assert::That( n.GetApprovedFile( ".txt" ), Equals( expected.str() ) );
     }
 };
 
@@ -63,7 +63,7 @@ Context( DescribeANamer )
     {
         Spec( ItCleansInput )
         {
-            Assert::That( n->getApprovedFile( ".txt" ),
+            Assert::That( n->GetApprovedFile( ".txt" ),
                           Equals( "/tmp/foo.cpp.approved.txt" ) );
         }
 
@@ -86,13 +86,13 @@ Context( DescribeANamer )
     {
         Spec( ItProvidesTheApprovedFilename )
         {
-            Assert::That( n->getApprovedFile( "png" ),
+            Assert::That( n->GetApprovedFile( "png" ),
                           Equals( "/tmp/foo.cpp.approved.png" ) );
         }
 
         Spec( ItProvidesTheReceivedFilename )
         {
-            Assert::That( n->getReceivedFile( "txt" ),
+            Assert::That( n->GetReceivedFile( "txt" ),
                           Equals( "/tmp/foo.cpp.received.txt" ) );
         }
 

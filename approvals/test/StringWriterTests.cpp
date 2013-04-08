@@ -11,7 +11,7 @@ Context( DescribeAStringWriter )
     Spec( ItWritesTheContentsToAFile )
     {
         StringWriter s( "Hello" );
-        s.write( "out.txt" );
+        s.Write( "out.txt" );
 
         ifstream in( "out.txt", ifstream::in );
         stringstream written;
@@ -25,20 +25,20 @@ Context( DescribeAStringWriter )
     {
         stringstream out;
         StringWriter s( "Hello" );
-        s.write( out );
+        s.Write( out );
         Assert::That( out.str(), Equals( "Hello" ) );
     }
 
     Spec( TheDefaultExtensionIsText )
     {
         StringWriter s( "Hello" );
-        Assert::That( s.getFileExtension(), Equals( "txt" ) );
+        Assert::That( s.GetFileExtension(), Equals( "txt" ) );
     }
 
     Spec( TheExtensionIsConfigurable )
     {
         StringWriter s( "Hello", "html" );
-        Assert::That( s.getFileExtension(), Equals( "html" ) );
+        Assert::That( s.GetFileExtension(), Equals( "html" ) );
     }
 };
 

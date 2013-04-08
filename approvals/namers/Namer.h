@@ -9,16 +9,16 @@ private:
     std::string approvalPath;
     std::string fileName;
 
-    std::string createPath( std::string fileExtension, std::string fileType )
+    std::string CreatePath( std::string fileExtension, std::string fileType )
     {
         std::string name( fileName +
                           "." + fileType +
-                          "." + eraseFirst( fileExtension, '.' ) );
+                          "." + EraseFirst( fileExtension, '.' ) );
         std::string p = approvalPath + "/" + name;
         return p;
     }
 
-    std::string eraseFirst( std::string s, char c )
+    std::string EraseFirst( std::string s, char c )
     {
         std::string::iterator it = s.begin();
 
@@ -30,7 +30,7 @@ private:
         return s;
     }
 
-    std::string eraseLast( std::string s, char c )
+    std::string EraseLast( std::string s, char c )
     {
         std::string::iterator it = s.end();
         --it;
@@ -43,28 +43,28 @@ private:
         return s;
     }
 
-    std::string nameClean( std::string name )
+    std::string NameClean( std::string name )
     {
-        return eraseLast( name, '.' );
+        return EraseLast( name, '.' );
     }
 
-    std::string pathClean( std::string path )
+    std::string PathClean( std::string path )
     {
-        return eraseLast( path, '/' );
+        return EraseLast( path, '/' );
     }
 
 public:
     Namer( std::string path, std::string name )
-        : approvalPath( pathClean( path ) ), fileName( nameClean( name ) ) {}
+        : approvalPath( PathClean( path ) ), fileName( NameClean( name ) ) {}
 
-    std::string getApprovedFile( std::string fileExtension )
+    std::string GetApprovedFile( std::string fileExtension )
     {
-        return createPath( fileExtension, "approved" );
+        return CreatePath( fileExtension, "approved" );
     }
 
-    std::string getReceivedFile( std::string fileExtension )
+    std::string GetReceivedFile( std::string fileExtension )
     {
-        return createPath( fileExtension, "received" );
+        return CreatePath( fileExtension, "received" );
     }
 };
 

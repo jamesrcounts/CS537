@@ -8,8 +8,8 @@ Context( DescribeAReporter )
     Spec( ItLaunchesTheSystemCommand )
     {
         TestReporter m;
-        m.report( "r.txt", "a.txt" );
-        Assert::That( m.launcher.receivedCommand(),
+        m.Report( "r.txt", "a.txt" );
+        Assert::That( m.launcher.ReceivedCommand(),
                       Equals( "fake r.txt a.txt " ) );
     }
 };

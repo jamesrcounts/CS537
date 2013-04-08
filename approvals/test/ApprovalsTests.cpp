@@ -18,7 +18,7 @@ Context( DescribeTheVerifyMethod )
                  "/ApprovalsTests.DescribeTheVerifyMethod.ItVerifiesUsingConfiguredReporter.approved.txt ";
         TestReporter &reporter = ReporterFactory::UseReporter<TestReporter>();
         AssertThrows( ApprovalException, Approvals::Verify( "Hello" ) )
-        string cmd = reporter.launcher.receivedCommand();
+        string cmd = reporter.launcher.ReceivedCommand();
         string dir = IglooNamerFactory::TestDirectory();
 
         size_t at;
@@ -40,7 +40,7 @@ Context( DescribeTheVerifyMethod )
 
         AssertThat( cmd, Equals( expected.str() ) );
         string received =
-            IglooNamerFactory::GetCurrentNamer().getReceivedFile( ".txt" );
+            IglooNamerFactory::GetCurrentNamer().GetReceivedFile( ".txt" );
         remove( received.c_str() );
     }
 };

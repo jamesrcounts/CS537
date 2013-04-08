@@ -19,7 +19,7 @@ public:
         StringWriter writer( contents );
         Namer &namer = IglooNamerFactory::GetCurrentNamer();
         Reporter &reporter = ReporterFactory::GetCurrentReporter();
-        FileApprover::verify( namer, writer, reporter );
+        FileApprover::Verify( namer, writer, reporter );
     }
 };
 
