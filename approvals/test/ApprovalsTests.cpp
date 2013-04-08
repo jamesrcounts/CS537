@@ -1,4 +1,5 @@
 #include <igloo/igloo.h>
+#include "../Approvals.h"
 #include "../namers/IglooNamerFactory.h"
 #include "../reporters/Reporter.h"
 #include "../StringWriter.h"
@@ -6,49 +7,6 @@
 
 using namespace igloo;
 using namespace std;
-
-class ReporterFactory
-{
-private:
-    static Reporter *reporter;
-    ReporterFactory()  {}
-    ~ReporterFactory() {}
-public:
-    static Reporter &GetCurrentReporter()
-    {
-        return *reporter;
-    }
-
-    template<typename ReporterType>
-    static ReporterType &UseReporter( )
-    {
-        if ( reporter != NULL )
-        {
-            delete reporter;
-        }
-
-        ReporterType *t = new ReporterType();
-        reporter = t;
-        return *t;
-    }
-};
-
-Reporter *ReporterFactory::reporter;
-
-class Approvals
-{
-private:
-    Approvals() {}
-    ~Approvals() {}
-public:
-    static void Verify( std::string contents )
-    {
-        StringWriter writer( contents );
-        Namer &namer = IglooNamerFactory::GetCurrentNamer();
-        Reporter &reporter = ReporterFactory::GetCurrentReporter();
-        FileApprover::verify( namer, writer, reporter );
-    }
-};
 
 Context( DescribeTheVerifyMethod )
 {
@@ -81,7 +39,8 @@ Context( DescribeTheVerifyMethod )
         while ( at != string::npos );
 
         AssertThat( cmd, Equals( expected.str() ) );
-        string received = IglooNamerFactory::GetCurrentNamer().getReceivedFile( ".txt" );
+        string received =
+            IglooNamerFactory::GetCurrentNamer().getReceivedFile( ".txt" );
         remove( received.c_str() );
     }
 };

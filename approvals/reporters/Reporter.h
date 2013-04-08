@@ -42,4 +42,32 @@ public:
     TestReporter() : Reporter( "fake", &launcher ) {};
 };
 
+class ReporterFactory
+{
+private:
+    static Reporter *reporter;
+    ReporterFactory()  {}
+    ~ReporterFactory() {}
+public:
+    static Reporter &GetCurrentReporter()
+    {
+        return *reporter;
+    }
+
+    template<typename ReporterType>
+    static ReporterType &UseReporter()
+    {
+        if ( reporter != NULL )
+        {
+            delete reporter;
+        }
+
+        ReporterType *t = new ReporterType();
+        reporter = t;
+        return *t;
+    }
+};
+
+Reporter *ReporterFactory::reporter = new MeldReporter();
+
 #endif

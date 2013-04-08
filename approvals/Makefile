@@ -2,7 +2,7 @@
 # Makefile
 ###################################
 CC = g++
-INCLUDE = -I ../igloo 
+INCLUDE = -I ../igloo
 CFLAGS = -lpthread -Wall 
 CHECK = cppcheck -v --inline-suppr --enable=all
 FORMAT = astyle -YfDHUbps4yj -k3 
@@ -22,7 +22,7 @@ ApprovalExceptionTests: test/ApprovalExceptionTests.cpp ApprovalException.h
 	$(CHECK) test/ApprovalExceptionTests.cpp
 	g++ $(INCLUDE) test/ApprovalExceptionTests.cpp -o test/bin/ApprovalExceptionTests -g $(CFLAGS)
 
-ApprovalsTests: test/ApprovalsTests.cpp 
+ApprovalsTests: test/ApprovalsTests.cpp Approvals.gch
 	$(FORMAT) test/ApprovalsTests.cpp
 	$(CHECK) test/ApprovalsTests.cpp
 	g++ $(INCLUDE) test/ApprovalsTests.cpp -o test/bin/ApprovalsTests -g $(CFLAGS)
@@ -46,6 +46,11 @@ FileApproverTests: test/FileApproverTests.cpp reporters/Reporter.h FileApprover.
 	$(FORMAT) test/FileApproverTests.cpp
 	$(CHECK) test/FileApproverTests.cpp
 	g++ $(INCLUDE) test/FileApproverTests.cpp -o test/bin/FileApproverTests -g $(CFLAGS)
+
+Approvals.gch: Approvals.h
+	$(FORMAT) Approvals.h
+	$(CHECK) Approvals.h
+	$(CC) $(INCLUDE) -c Approvals.h -O3 -Wall
 
 ApprovalException.h: ApprovalException.gch
 
