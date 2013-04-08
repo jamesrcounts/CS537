@@ -20,3 +20,4 @@ httpClient
 log2.txt
 zero.txt
 test/bin
+*.received.txt

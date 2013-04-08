@@ -5,21 +5,25 @@
 # Jim Counts
 ###################################
 CC = g++
-INCLUDE = -I ../igloo
+INCLUDE = -I ../igloo -I ../approvals
 CFLAGS = -lpthread -Wall
-SRCS = *.cpp *.h
+SRCS = *.h ./tests/*.cpp
 
 all: format runtest check InternetSocket.gch SocketConnection.gch TcpListeningSocket.gch TcpSocket.gch
 
-runtest: listening_test test
-	./listening_test
-	./test
+runtest: listening_test client_test http_test
+	./tests/listening_test
+	./tests/client_test
+	./tests/bin/http_test
 
-listening_test: listening_test.cpp *.h
-	g++ $(INCLUDE) listening_test.cpp -o listening_test -g $(CFLAGS)
+listening_test: ./tests/listening_test.cpp *.h
+	g++ $(INCLUDE) ./tests/listening_test.cpp -o ./tests/listening_test -g $(CFLAGS)
 
-test: test.cpp *.h
-	$(CC) $(INCLUDE) test.cpp -o test -g $(CFLAGS)
+client_test: ./tests/client_test.cpp *.h
+	$(CC) $(INCLUDE) ./tests/client_test.cpp -o ./tests/client_test -g $(CFLAGS)
+
+http_test: ./tests/http_test.cpp *.h
+	$(CC) $(INCLUDE) ./tests/http_test.cpp -o ./tests/bin/http_test -g $(CFLAGS)
 
 format: 
 	astyle -YfDHUbps4yj -k3 $(SRCS)
@@ -28,7 +32,7 @@ check: format
 	cppcheck -v --inline-suppr --enable=all $(SRCS)
 
 clean:
-	rm -f listening_test test *.orig *.gch
+	rm -f ./tests/listening_test ./tests/client_test ./tests/test *.orig *.gch
 
 InternetSocket.gch: InternetSocket.h
 	$(CC) -c InternetSocket.h $(CFLAGS)
