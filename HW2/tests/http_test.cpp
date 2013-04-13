@@ -4,6 +4,8 @@
 #include <approvals/Approvals.h>
 #include <arpa/inet.h>
 #include <errno.h>
+#include <algorithm>
+#include <iterator>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <stdio.h>
@@ -67,6 +69,17 @@ Context( DescribeAWebServer )
         return response;
     }
 
+    Spec( ItCanHandlePutRequests )
+    {
+        pthread_t tid;
+        startServer( &tid );
+        string response = sendRequest( "PUT /greeting.txt HTTP/1.0\n\nHello" );
+        pthread_join( tid, NULL );
+        Approvals::Verify( response );
+        AssertThat( FileApprover::FileExists( IglooNamerFactory::TestDirectory() + "/pub" + "/greeting.txt" ),
+                    Equals( true ) );
+    }
+
     Spec( ItCanHandleGetRequests )
     {
         pthread_t tid;
@@ -104,6 +117,30 @@ Context( DescribeAWebServer )
     }
 };
 
+string FixupPath( string resource )
+{
+    char buf[512];
+    bzero( buf, 512 );
+    ssize_t readlink_ok = readlink( "/proc/self/exe", buf, 511 );
+
+    string dir( "." );
+
+    if ( readlink_ok != -1 )
+    {
+        dir = string( buf );
+    }
+
+    unsigned slash = dir.find_last_of( "/" );
+
+    if ( slash != std::string::npos )
+    {
+        dir = dir.substr( 0, slash );
+    }
+
+    string path = dir + "/pub" + resource;
+    return path;
+}
+
 void *server( void *state )
 {
     TcpListeningSocket t( 4, "127.0.0.1", 3490 );
@@ -123,25 +160,8 @@ void *server( void *state )
 
     if ( "HEAD" == request["COMMAND"] || "GET" == request["COMMAND"] )
     {
-        char buf[512];
-        bzero( buf, 512 );
-        ssize_t readlink_ok = readlink( "/proc/self/exe", buf, 511 );
+        string path = FixupPath( request["RESOURCE"] );
 
-        string dir( "." );
-
-        if ( readlink_ok != -1 )
-        {
-            dir = string( buf );
-        }
-
-        unsigned slash = dir.find_last_of( "/" );
-
-        if ( slash != std::string::npos )
-        {
-            dir = dir.substr( 0, slash );
-        }
-
-        string path = dir + "/pub" + request["RESOURCE"];
         struct stat statbuf;
 
         if ( stat( path.c_str(), &statbuf ) != -1 )
@@ -194,6 +214,34 @@ void *server( void *state )
             responseStream << request["VERSION"] << " 404 Not Found\n";
         }
     }
+    else if ( "PUT" == request["COMMAND"] )
+    {
+        string path = FixupPath( request["RESOURCE"] );
+        ofstream out;
+        out.open( path.c_str() );
+        std::istreambuf_iterator<char> eos;
+        std::string s( std::istreambuf_iterator<char>( requestStream ), eos );
+        out << s;
+        out.close();
+
+        // if ( version == 1.1f )
+        // {
+        //     WriteToStream( fd, string( "HTTP/1.1 100 Continue" ) );
+        // }
+
+        // string response = HttpHandler::StatusOk( tokens[2] );
+
+        // if ( length != 0 )
+        // {
+        // }
+        // else
+        // {
+        //     response = HttpHandler::StatusBadRequest( tokens[2] );
+        // }
+
+        // WriteToStream( fd, response + HttpHandler::BlankLine() );
+    }
+
     else
     {
         cerr << "Recieved " <<
