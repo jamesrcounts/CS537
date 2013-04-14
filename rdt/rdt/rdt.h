@@ -1,33 +1,33 @@
 #ifndef RDT_H
-#define RDT_H 
+#define RDT_H
 
 #include <stdint.h>
 
-packet_t rdt_loadpacket(const char *buffer, int buffer_length){
+packet_t rdt_loadpacket( const  char *buffer, int buffer_length )
+{
     packet_t p;
     bzero( ( void * )&p, sizeof( p ) );
-    build_packet(&p,10,101, buffer, buffer_length );
-    return p;	
+    build_packet( &p, 10, 101, buffer, buffer_length );
+    return p;
 }
 
-int rdt_unloadpacket(const packet_t &p, char * buffer,int  buffer_length)
+int rdt_unloadpacket( const char *udp_payload,
+                      int payload_length,
+                      char *buffer,
+                      int  buffer_length )
 {
-	int numbytes = 0;
+    if ( 0 != checksum( ( unsigned char * ) udp_payload, payload_length ) )
+    {
+        return -1;
+    }
 
-	uint16_t checksum = packet_checksum(p);
-	if(checksum != 0){
-		return -1;
-	} 
+    packet_t p;
+    fill_packet( p, udp_payload );
 
-    // do checksum if ok we eventually return seq, if not ok, return -1 right now
-    // possibly set errno
-
-    // checksum now known to be ok
-
-    // packet_t rp;
-    // fill_packet( recv_buffer, &rp );
-    // memcpy( buffer, rp.data, buffer_length );
-    // return numbytes - 12;
+    bzero( buffer, buffer_length );
+    int l  = ntohs( p.len ) - 12;
+    int numbytes = buffer_length < l ? buffer_length : l ;
+    memcpy( buffer, p.data, numbytes );
 
     return numbytes;
 }
@@ -40,13 +40,13 @@ int rdt_send( int socket_descriptor,
               struct sockaddr *destination_address,
               int address_length )
 {
-	packet_t p = rdt_loadpacket(buffer, buffer_length);
+    packet_t p = rdt_loadpacket( buffer, buffer_length );
     return sendto( socket_descriptor,
-                           (void *)&p,
-                           ntohs( p.len ),
-                           flags,
-                           destination_address,
-                           ( socklen_t )address_length );
+                   ( void * )&p,
+                   ntohs( p.len ),
+                   flags,
+                   destination_address,
+                   ( socklen_t )address_length );
 }
 
 int rdt_recv( int socket_descriptor,
@@ -54,7 +54,7 @@ int rdt_recv( int socket_descriptor,
               int buffer_length,
               int flags,
               struct sockaddr *from_address,
-              int *address_length  )
+              int *address_length )
 {
     char recv_buffer[512];
     bzero( recv_buffer, 512 );
@@ -65,16 +65,7 @@ int rdt_recv( int socket_descriptor,
                              from_address,
                              ( socklen_t * )address_length );
 
-    // do checksum if ok we eventually return seq, if not ok, return -1 right now
-    // possibly set errno
-
-    // checksum now known to be ok
-
-    packet_t rp;
-    fill_packet( recv_buffer, &rp );
-
-    memcpy( buffer, rp.data, ntohs( rp.len ) - 12 );
-    return numbytes - 12;
+    return rdt_unloadpacket( recv_buffer, numbytes, buffer, buffer_length );
 }
 
 int rdt_socket( int address_family,
@@ -95,6 +86,5 @@ int rdt_close( int socket_descriptor )
 {
     return close( socket_descriptor );
 }
-
 
 #endif

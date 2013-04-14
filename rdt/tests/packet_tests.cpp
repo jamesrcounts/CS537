@@ -37,7 +37,7 @@ Context( DescribeAPacket )
         char data[7] = "Hello!";
         memcpy( p.data, data, 7 );
 
-        p.cksum = packet_checksum( p );
+        p.cksum = checksum( p );
         Approvals::Verify( FormatPacket( p ) );
     }
 
@@ -52,8 +52,8 @@ Context( DescribeAPacket )
         char data[7] = "Hello!";
         memcpy( p.data, data, 7 );
 
-        p.cksum = packet_checksum( p );
-        uint16_t check = packet_checksum( p );
+        p.cksum = checksum( p );
+        uint16_t check = checksum( p );
         Assert::That( check, Equals( 0x0000 ) );
     }
 
@@ -90,7 +90,7 @@ Context( DescribeAPacket )
 
         packet_t q;
         bzero( ( void * )&q, sizeof( q ) );
-        fill_packet( ( char * )&p, &q );
+        fill_packet( q, ( char * )&p );
 
         Approvals::Verify( FormatPacket( q ) );
     }

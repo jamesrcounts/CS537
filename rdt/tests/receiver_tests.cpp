@@ -39,13 +39,13 @@ Context( DescribeRdtRecv )
         struct  sockaddr_in cliaddr;
         int clilen = sizeof( cliaddr );
 
-        rdt_recv( listenfd,
-                  buffer,
-                  512,
-                  0,
-                  ( struct sockaddr * )&cliaddr,
-                  &clilen );
-
+        int numbytes = rdt_recv( listenfd,
+                                 buffer,
+                                 512,
+                                 0,
+                                 ( struct sockaddr * )&cliaddr,
+                                 &clilen );
+        AssertThat( numbytes, !Equals( -1 ) );
         rdt_close( listenfd );
         Approvals::Verify( string( buffer ) );
     }
@@ -56,8 +56,20 @@ Context( DescribeRdtRecv )
         p.cksum = 103;
         char buffer[14];
         int buffer_length = 14;
-        int numbytes = rdt_unloadpacket( p, buffer, buffer_length );
+        int numbytes = rdt_unloadpacket( ( char * )&p,
+                                         htons( p.len ),
+                                         buffer,
+                                         buffer_length );
         Assert::That( numbytes, Equals( -1 ) );
+    }
+
+    Spec( AValidPacketCanBeUnloaded )
+    {
+        packet_t p = rdt_loadpacket( "Hello Jim", 10 );
+        int buffer_length = 10;
+        char buffer[buffer_length];
+        rdt_unloadpacket( ( char * )&p, htons( p.len ), buffer, buffer_length );
+        Approvals::Verify( string( buffer ) );
     }
 };
 
@@ -97,7 +109,7 @@ void send_rdtmessage( const char *message,
     servaddr.sin_addr.s_addr =  inet_addr( address );
     servaddr.sin_port = htons( port ) ;
 
-    if ( ( sockfd = socket( AF_INET, SOCK_DGRAM, 0 ) ) == -1 )
+    if ( ( sockfd = rdt_socket( AF_INET, SOCK_DGRAM, 0 ) ) == -1 )
     {
         perror( "talker: socket" );
         exit( 1 );
@@ -120,8 +132,7 @@ void send_rdtmessage( const char *message,
         exit( 1 );
     }
 
-    printf( "talker: sent %d bytes to 127.0.0.1\n", numbytes );
-    close( sockfd );
+    rdt_close( sockfd );
 
 }
 
@@ -159,7 +170,6 @@ int get_rdtlistener( const char *address, int port )
                  errno,
                  strerror( errno ) );
         return -1;
-
     }
 
     return listenfd;
