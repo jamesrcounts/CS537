@@ -38,36 +38,7 @@ rdt/bin:
 	mkdir rdt/bin
 
 clean: 
-	rm -f tests/*.orig tests/bin/*_tests 
+	rm -f rdt/*.o rdt/*.orig 
 
-runtest: tests
-	./tests/bin/rdt_tests
-
-tests: tests/bin tests/bin/rdt_tests 
-
-tests/bin/rdt_tests: headers tests/rdt_tests.cpp 
-	cppcheck $(CHKFLAGS) tests/rdt_tests.cpp
-	astyle $(STYLE) tests/rdt_tests.cpp
-	$(CC) $(TI) tests/rdt_tests.cpp -o tests/bin/rdt_tests $(CFLAGS)
-
-headers: tests/packet.ck tests/rdt.ck tests/udt.ck
-
-tests/packet.ck: tests/packet.h
-	cppcheck $(CHKFLAGS) tests/packet.h
-	astyle $(STYLE) tests/packet.h
-	touch tests/packet.ck
-
-tests/rdt.ck: tests/rdt.h
-	cppcheck $(CHKFLAGS) tests/rdt.h
-	astyle $(STYLE) tests/rdt.h
-	touch tests/rdt.ck
-
-tests/udt.ck: tests/udt.h
-	cppcheck $(CHKFLAGS) tests/udt.h
-	astyle $(STYLE) tests/udt.h
-	touch tests/udt.ck
-
-tests/bin: 
-	mkdir tests/bin
 
 # DO NOT DELETE
