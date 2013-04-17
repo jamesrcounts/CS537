@@ -32,6 +32,53 @@ int rdt_unloadpacket( const char *udp_payload,
     return numbytes;
 }
 
+bool wait_ack( int socket_descriptor, uint16_t ackno, uint32_t timeout )
+{
+    fd_set master;
+    FD_ZERO( &master );
+    FD_SET( socket_descriptor, &master );
+
+    struct timeval t;
+    t.tv_sec = timeout;
+
+    if ( select( socket_descriptor + 1, &master, NULL, NULL, &t ) == -1 )
+    {
+        fprintf( stderr,
+                 "Select error, errno = %d (%s) \n",
+                 errno,
+                 strerror( errno ) );
+        return false;
+    }
+
+    if ( !FD_ISSET( socket_descriptor, &master ) )
+    {
+        return false;
+    }
+
+    struct  sockaddr_in from_address;
+
+    int address_length = sizeof( from_address );
+
+    char recv_buffer[12];
+
+    bzero( recv_buffer, 12 );
+
+    int recvbytes = rdt_recv( socket_descriptor,
+                              recv_buffer,
+                              12,
+                              0,
+                              from_address,
+                              address_length );
+
+    if ( 0 == checksum( ( unsigned char * ) recv_buffer, 12 ) )
+    {
+        packet_t ack;
+        fill_packet( ack, recv_buffer );
+        return ntohs( ack.ackno ) == ackno;
+    }
+
+    return false;
+}
 
 int rdt_send( int socket_descriptor,
               char *buffer,
@@ -40,13 +87,28 @@ int rdt_send( int socket_descriptor,
               struct sockaddr *destination_address,
               int address_length )
 {
-    packet_t p = rdt_loadpacket( buffer, buffer_length );
-    return sendto( socket_descriptor,
-                   ( void * )&p,
-                   ntohs( p.len ),
-                   flags,
-                   destination_address,
-                   ( socklen_t )address_length );
+    int sendbytes = 0;
+
+    while ( 0 < buffer_length )
+    {
+        int numbytes = 500 < buffer_length ? 500 : buffer_length;
+        packet_t p = rdt_loadpacket( buffer, numbytes );
+        buffer_length -= numbytes;
+
+        sendbytes += sendto( socket_descriptor,
+                             ( void * )&p,
+                             ntohs( p.len ),
+                             flags,
+                             destination_address,
+                             ( socklen_t )address_length );
+
+        if ( !wait_ack( socket_descriptor, seqno, timeout ) )
+        {
+            return -1;
+        }
+    }
+
+    return sendbytes;
 }
 
 int rdt_recv( int socket_descriptor,

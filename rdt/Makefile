@@ -16,10 +16,16 @@ clean:
 	rm -f tests/*.orig tests/bin/*_tests 
 
 runtest: tests
+	# ./tests/bin/rdt_sender_tests
 	./tests/bin/packet_tests
 	./tests/bin/receiver_tests
 
 tests: tests/bin tests/bin/receiver_tests tests/bin/packet_tests 
+
+tests/bin/rdt_sender_tests: headers tests/rdt_sender_tests.cpp 
+	cppcheck $(CHKFLAGS) tests/rdt_sender_tests.cpp
+	astyle $(STYLE) tests/rdt_sender_tests.cpp
+	$(CC) $(TI) tests/rdt_sender_tests.cpp -o tests/bin/rdt_sender_tests $(CFLAGS)
 
 tests/bin/packet_tests: headers tests/packet_tests.cpp 
 	cppcheck $(CHKFLAGS) tests/packet_tests.cpp
