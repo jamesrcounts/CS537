@@ -4,16 +4,36 @@
 		"selected_items":
 		[
 			[
+				"p",
+				"path"
+			],
+			[
+				"Mess",
+				"MessageCache"
+			],
+			[
+				"Mes",
+				"MessageCache"
+			],
+			[
+				"M",
+				"MessageCache"
+			],
+			[
+				"L",
+				"Lpomodoro"
+			],
+			[
+				"cpp",
+				"cpp"
+			],
+			[
 				"Tom",
 				"TomatoState"
 			],
 			[
 				"Form",
 				"FormatInstant"
-			],
-			[
-				"cpp",
-				"cppcheck"
 			],
 			[
 				"hw",
@@ -200,10 +220,6 @@
 				"ASSERT_TRUE"
 			],
 			[
-				"M",
-				"MoveMixedLeft"
-			],
-			[
 				"ASSE",
 				"ASSERT_STRING_EQUALS"
 			],
@@ -300,50 +316,10 @@
 	"buffers":
 	[
 		{
-			"file": "/home/jim/Documents/github/CS542/Project/Makefile",
+			"file": "/home/jim/Documents/github/CS542/Project2/Makefile",
 			"settings":
 			{
-				"buffer_size": 3259,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/jim/Documents/github/CS542/Project/tests/tomato_tests.cpp",
-			"settings":
-			{
-				"buffer_size": 1461,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/jim/Documents/github/CS542/Project/pomodoro/Tomato.h",
-			"settings":
-			{
-				"buffer_size": 548,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/jim/Documents/github/CS542/Project/pomodoro/Tomato.cpp",
-			"settings":
-			{
-				"buffer_size": 1698,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/jim/Documents/github/CS542/Project/pomodoro/LogManager.cpp",
-			"settings":
-			{
-				"buffer_size": 841,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/jim/Documents/github/CS542/Project/Tomato.txt",
-			"settings":
-			{
-				"buffer_size": 241,
+				"buffer_size": 5186,
 				"line_ending": "Unix"
 			}
 		}
@@ -351,9 +327,13 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 75.0,
+		"height": 180.0,
 		"selected_items":
 		[
+			[
+				"Package Control: r",
+				"Package Control: Remove Package"
+			],
 			[
 				"Package Control: in",
 				"Package Control: Install Package"
@@ -376,11 +356,35 @@
 	},
 	"file_history":
 	[
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/FileListener.cpp",
+		"/home/jim/Documents/github/CS542/Project2/tests/tomato_tests.cpp",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/PomodoroState.h",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/PomodoroState.cpp",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/Tomato.h",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/Tomato.cpp",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/FileListener.h",
+		"/home/jim/Documents/github/CS542/Project2/Tomato.txt",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/LogManager.cpp",
+		"/home/jim/Documents/github/CS542/Project2/grind.txt",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/Timer.cpp",
+		"/home/jim/Documents/github/CS542/HW5/Animal.h",
+		"/home/jim/Documents/github/CS542/Project2/tests/logmanager_tests.cpp",
+		"/home/jim/Documents/github/CS542/approvals/approvals/namers/Namer.h",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/Timer.h",
+		"/home/jim/Documents/github/CS542/Project2/tests/messagecache_tests.cpp",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/MessageCache.cpp",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/MessageCache.h",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/pomodoro.cpp",
+		"/home/jim/Documents/github/CS542/Project/pomodoro/Tomato.cpp",
+		"/home/jim/Documents/github/CS542/Project/Makefile",
+		"/home/jim/Documents/github/CS542/Project/tests/tomato_tests.cpp",
+		"/home/jim/Documents/github/CS542/Project/pomodoro/Tomato.h",
 		"/home/jim/Documents/github/CS542/Project/pomodoro/LogManager.cpp",
+		"/home/jim/Documents/github/CS542/Project/Tomato.txt",
+		"/home/jim/Documents/github/CS542/Project2/pomodoro/LogManager.h",
 		"/home/jim/Documents/github/CS542/Project/tests/logmanager_tests.cpp",
 		"/home/jim/Documents/github/CS542/Project/pomodoro/Menus.cpp",
 		"/home/jim/Documents/github/CS542/Project/pomodoro/pomodoro.cpp",
-		"/home/jim/Documents/github/CS542/Project/pomodoro/Tomato.cpp",
 		"/home/jim/Documents/github/CS542/Project/tests/timer_tests.cpp",
 		"/home/jim/Documents/github/CS542/Project/pomodoro/Timer.h",
 		"/home/jim/Documents/github/CS542/Project/pomodoro/Timer.cpp",
@@ -427,7 +431,6 @@
 		"/home/jim/Documents/github/CS542/HW5/Snake.h",
 		"/home/jim/Documents/github/CS542/HW5/Snake.cpp",
 		"/home/jim/Documents/github/CS542/HW5/Animal.cpp",
-		"/home/jim/Documents/github/CS542/HW5/Animal.h",
 		"/home/jim/Documents/github/CS542/HW4/hw4.cpp",
 		"/home/jim/Documents/github/CS542/HW3/String.cpp",
 		"/home/jim/Documents/github/CS542/HW3/test.cpp",
@@ -481,6 +484,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			".GetTypeCode()",
+			"MessageCache",
 			"hw6",
 			"test.cpp",
 			"5",
@@ -521,165 +526,28 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/home/jim/Documents/github/CS542/Project/Makefile",
+					"file": "/home/jim/Documents/github/CS542/Project2/Makefile",
 					"settings":
 					{
-						"buffer_size": 3259,
+						"buffer_size": 5186,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2217,
-								2217
+								35,
+								35
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Makefile/Makefile.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 604.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/home/jim/Documents/github/CS542/Project/tests/tomato_tests.cpp",
-					"settings":
-					{
-						"buffer_size": 1461,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1043,
-								1043
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 439.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/jim/Documents/github/CS542/Project/pomodoro/Tomato.h",
-					"settings":
-					{
-						"buffer_size": 548,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								486,
-								486
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/jim/Documents/github/CS542/Project/pomodoro/Tomato.cpp",
-					"settings":
-					{
-						"buffer_size": 1698,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								127,
-								127
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/home/jim/Documents/github/CS542/Project/pomodoro/LogManager.cpp",
-					"settings":
-					{
-						"buffer_size": 841,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								504,
-								504
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/home/jim/Documents/github/CS542/Project/Tomato.txt",
-					"settings":
-					{
-						"buffer_size": 241,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
