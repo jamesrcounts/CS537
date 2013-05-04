@@ -1,0 +1,4 @@
+MyVertex
+Distance: Infinity
+Parent: NULL
+Neighbors: []
