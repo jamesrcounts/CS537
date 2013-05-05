@@ -13,6 +13,7 @@ OBJS = $(VERTEX) $(EDGE) $(GRAPH)
 HDRS = dijkstra/vertex.h dijkstra/edge.h dijkstra/graph.h
 SRCS = dijkstra/vertex.cpp dijkstra/edge.cpp dijkstra/graph.cpp dijkstra/dijkstra.cpp
 PROG = dijkstra/bin/dijkstra
+BAKS = ${SRCS:.cpp=.cpp.orig} ${HDRS:.h=.h.orig}
 
 all: $(TEST) $(OBJS) $(PROG) runtest
 
@@ -20,7 +21,7 @@ runtest:
 	$(TEST)
 
 clean:
-	rm -f $(TEST) $(OBJS) $(PROG)
+	rm -f $(TEST) $(OBJS) $(PROG) $(BAKS)
 
 format:
 	$(FORMAT) $(TESTS) $(HDRS) $(SRCS)
