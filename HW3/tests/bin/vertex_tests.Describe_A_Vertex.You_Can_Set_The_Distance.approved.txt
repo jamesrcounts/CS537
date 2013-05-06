@@ -1,4 +1,0 @@
-a
-Distance: 10
-Parent: NULL
-Neighbors: []

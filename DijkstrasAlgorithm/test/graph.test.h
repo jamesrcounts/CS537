@@ -74,6 +74,21 @@ Context( Describe_A_Graph )
         v = g.Dijkstra( "a" );
         Approvals::Verify( v[0].ToString() );
     }
+    Spec( Dijkstra_For_Pair )
+    {
+        Vertex a( "a" );
+        Vertex b( "b" );
+        Edge c( 3, a, b );
+
+        Graph g;
+        g.AddNode( a );
+        g.AddNode( b );
+        g.AddEdge( c );
+
+        std::vector<Vertex> v;
+        v = g.Dijkstra( "a" );
+        Approvals::Verify( v[0].ToString() );
+    }
 };
 
 #endif

@@ -87,11 +87,7 @@ Vertex &Vertex::operator=( const Vertex &v )
         return *this;
     }
 
-    int cost = v.Cost;
-    string name = v.Id;
     Edge *e = NULL;
-    Vertex *p = v.Parent;
-
     if ( v.AdjacentEdge != NULL )
     {
         e = new Edge( *v.AdjacentEdge );
@@ -99,10 +95,10 @@ Vertex &Vertex::operator=( const Vertex &v )
 
     delete AdjacentEdge;
 
-    Cost = cost;
-    Id = name;
+    Cost = v.Cost;
+    Id = v.Id;
     AdjacentEdge = e;
-    Parent = p;
+    Parent = v.Parent;
     return *this;
 }
 

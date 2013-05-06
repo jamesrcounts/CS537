@@ -1,4 +1,0 @@
-a
-Distance: Infinity
-Parent: NULL
-Neighbors: [b, c, ]
