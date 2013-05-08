@@ -1,16 +1,17 @@
 UNLOCK = chmod 666
 FORMAT = astyle -YfDHUbps4yj -k3
 
-SRCS = src/dijkstra.cpp
+HDRS = src/Graph.h src/Parser.h
+SRCS = src/dijkstra.cpp src/Graph.cpp src/Parser.cpp
 PROG = bin/dijkstra
 
 all: $(PROG) 
 
 unlock: format
-	$(UNLOCK) Makefile $(SRCS)
+	$(UNLOCK) Makefile $(SRCS) $(HDRS)
 
 format:
-	$(FORMAT) $(SRCS)	
+	$(FORMAT) $(SRCS) $(HDRS)
 
-$(PROG): $(SRCS)
+$(PROG): $(SRCS) $(HDRS)
 	$(CXX) $(SRCS) -o $(PROG)
